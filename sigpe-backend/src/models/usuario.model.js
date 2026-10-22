@@ -35,3 +35,9 @@ export const deleteUsuario = async (id) => {
   const [result] = await pool.execute(query, [id]);
   return result.affectedRows;
 };
+
+export const getUsuarioByUsername = async (username) => {
+  const query = `SELECT * FROM usuarios WHERE username = ?`;
+  const [rows] = await pool.execute(query, [username]);
+  return rows[0];
+};
