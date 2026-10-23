@@ -7,13 +7,14 @@ import {
   putPeriodo, 
   removePeriodo 
 } from '../controllers/periodo.controller.js';
+import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', getPeriodos);           // GET /api/periodos
-router.get('/:id', getPeriodo);         // GET /api/periodos/1
-router.post('/', postPeriodo);          // POST /api/periodos
-router.put('/:id', putPeriodo);         // PUT /api/periodos/1
-router.delete('/:id', removePeriodo);   // DELETE /api/periodos/1
+router.get('/', getPeriodos);
+router.get('/:id', getPeriodo);
+router.post('/', verificarToken, postPeriodo);
+router.put('/:id', verificarToken, putPeriodo);
+router.delete('/:id', verificarToken, removePeriodo);
 
 export default router;

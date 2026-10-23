@@ -6,12 +6,13 @@ import {
   putUsuario, 
   removeUsuario 
 } from '../controllers/usuario.controller.js';
+import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', getUsuarios);           // GET /api/usuarios
-router.post('/', postUsuario);          // POST /api/usuarios
-router.put('/:id', putUsuario);         // PUT /api/usuarios/1
-router.delete('/:id', removeUsuario);   // DELETE /api/usuarios/1
+router.get('/', getUsuarios);
+router.post('/', verificarToken, postUsuario);
+router.put('/:id', verificarToken, putUsuario);
+router.delete('/:id', verificarToken, removeUsuario);
 
 export default router;

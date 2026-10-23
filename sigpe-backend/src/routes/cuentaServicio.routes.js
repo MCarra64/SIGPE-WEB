@@ -8,14 +8,15 @@ import {
   putCuenta, 
   removeCuenta 
 } from '../controllers/cuentaServicio.controller.js';
+import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', getCuentas);                              // GET /api/cuentas
-router.get('/:id', getCuenta);                            // GET /api/cuentas/1
-router.get('/abonado/:idAbonado', getCuentasDeAbonado);   // GET /api/cuentas/abonado/1
-router.post('/', postCuenta);                             // POST /api/cuentas
-router.put('/:id', putCuenta);                            // PUT /api/cuentas/1
-router.delete('/:id', removeCuenta);                      // DELETE /api/cuentas/1
+router.get('/', getCuentas);
+router.get('/:id', getCuenta);
+router.get('/abonado/:idAbonado', getCuentasDeAbonado);
+router.post('/', verificarToken, postCuenta);
+router.put('/:id', verificarToken, putCuenta);
+router.delete('/:id', verificarToken, removeCuenta);
 
 export default router;

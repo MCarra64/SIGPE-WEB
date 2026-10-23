@@ -7,13 +7,14 @@ import {
   putCuota, 
   removeCuota 
 } from '../controllers/cuota.controller.js';
+import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', getCuotas);           // GET /api/cuotas
-router.get('/:id', getCuota);         // GET /api/cuotas/1
-router.post('/', postCuota);          // POST /api/cuotas
-router.put('/:id', putCuota);         // PUT /api/cuotas/1
-router.delete('/:id', removeCuota);   // DELETE /api/cuotas/1
+router.get('/', getCuotas);
+router.get('/:id', getCuota);
+router.post('/', verificarToken, postCuota);
+router.put('/:id', verificarToken, putCuota);
+router.delete('/:id', verificarToken, removeCuota);
 
 export default router;

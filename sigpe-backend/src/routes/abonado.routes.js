@@ -7,13 +7,14 @@ import {
   putAbonado, 
   removeAbonado 
 } from '../controllers/abonado.controller.js';
+import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.get('/', getAbonados);           // GET /api/abonados
-router.get('/:id', getAbonado);         // GET /api/abonados/1
-router.post('/', postAbonado);          // POST /api/abonados
-router.put('/:id', putAbonado);         // PUT /api/abonados/1
-router.delete('/:id', removeAbonado);   // DELETE /api/abonados/1
+router.get('/', getAbonados);
+router.get('/:id', getAbonado);
+router.post('/', verificarToken, postAbonado);
+router.put('/:id', verificarToken, putAbonado);
+router.delete('/:id', verificarToken, removeAbonado);
 
 export default router;
