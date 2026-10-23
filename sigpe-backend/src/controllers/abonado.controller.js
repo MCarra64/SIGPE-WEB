@@ -1,4 +1,3 @@
-// src/controllers/abonado.controller.js
 import { 
   getAllAbonados, 
   getAbonadoById, 
@@ -7,7 +6,6 @@ import {
   deleteAbonado 
 } from '../models/abonado.model.js';
 
-// 1. GET (Todos)
 export const getAbonados = async (req, res) => {
   try {
     const abonados = await getAllAbonados();
@@ -18,7 +16,6 @@ export const getAbonados = async (req, res) => {
   }
 };
 
-// 2. GET (Por ID)
 export const getAbonado = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,7 +32,6 @@ export const getAbonado = async (req, res) => {
   }
 };
 
-// 3. POST
 export const postAbonado = async (req, res) => {
   try {
     const { nombres, apellidos, telefono, direccion } = req.body;
@@ -57,7 +53,6 @@ export const postAbonado = async (req, res) => {
   }
 };
 
-// 4. PUT
 export const putAbonado = async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,7 +75,6 @@ export const putAbonado = async (req, res) => {
   }
 };
 
-// 5. DELETE
 export const removeAbonado = async (req, res) => {
   try {
     const { id } = req.params;
