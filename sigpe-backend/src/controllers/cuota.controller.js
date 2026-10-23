@@ -1,4 +1,3 @@
-// src/controllers/cuota.controller.js
 import { 
   getAllCuotas, 
   getCuotaById, 
@@ -7,7 +6,6 @@ import {
   deleteCuota 
 } from '../models/cuota.model.js';
 
-// 1. GET (Todas)
 export const getCuotas = async (req, res) => {
   try {
     const cuotas = await getAllCuotas();
@@ -18,7 +16,6 @@ export const getCuotas = async (req, res) => {
   }
 };
 
-// 2. GET (Por ID)
 export const getCuota = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,7 +32,6 @@ export const getCuota = async (req, res) => {
   }
 };
 
-// 3. POST
 export const postCuota = async (req, res) => {
   try {
     const { id_periodo, monto, descripcion, estado } = req.body;
@@ -60,7 +56,6 @@ export const postCuota = async (req, res) => {
   }
 };
 
-// 4. PUT
 export const putCuota = async (req, res) => {
   try {
     const { id } = req.params;
@@ -83,7 +78,6 @@ export const putCuota = async (req, res) => {
   }
 };
 
-// 5. DELETE
 export const removeCuota = async (req, res) => {
   try {
     const { id } = req.params;

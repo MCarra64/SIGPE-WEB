@@ -1,7 +1,5 @@
-// src/models/pago.model.js
 import { pool } from '../config/db.js';
 
-// 1. Obtener todos los pagos (con datos cruzados de 4 tablas)
 export const getAllPagos = async () => {
   const query = `
     SELECT 
@@ -26,7 +24,6 @@ export const getAllPagos = async () => {
   return rows;
 };
 
-// 2. Obtener un pago por ID
 export const getPagoById = async (id) => {
   const query = `
     SELECT 
@@ -51,11 +48,9 @@ export const getPagoById = async (id) => {
   return rows[0];
 };
 
-// 3. Crear un pago
 export const createPago = async (pagoData) => {
   const { id_cuenta, id_periodo, id_usuario, fecha_pago, monto_pagado, numero_recibo, observacion } = pagoData;
   
-  // Si no envían fecha de pago, usamos la fecha y hora actual (solo el formato YYYY-MM-DD)
   const fecha = fecha_pago || new Date().toISOString().split('T')[0];
 
   const query = `
@@ -68,7 +63,6 @@ export const createPago = async (pagoData) => {
   return result.insertId;
 };
 
-// 4. Actualizar un pago (útil si se equivocaron en el monto o la observación)
 export const updatePago = async (id, pagoData) => {
   const { monto_pagado, numero_recibo, observacion } = pagoData;
   const query = `
@@ -80,7 +74,6 @@ export const updatePago = async (id, pagoData) => {
   return result.affectedRows;
 };
 
-// 5. Eliminar un pago (En contabilidad real no se recomienda, pero para el CRUD lo haremos)
 export const deletePago = async (id) => {
   const query = `DELETE FROM pagos WHERE id_pago = ?`;
   const [result] = await pool.execute(query, [id]);

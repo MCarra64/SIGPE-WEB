@@ -1,4 +1,3 @@
-// src/controllers/cuentaServicio.controller.js
 import { 
   getAllCuentas, 
   getCuentaById, 
@@ -8,7 +7,6 @@ import {
   deleteCuenta 
 } from '../models/cuentaservicio.model.js';
 
-// 1. GET (Todas)
 export const getCuentas = async (req, res) => {
   try {
     const cuentas = await getAllCuentas();
@@ -19,7 +17,6 @@ export const getCuentas = async (req, res) => {
   }
 };
 
-// 2. GET (Por ID)
 export const getCuenta = async (req, res) => {
   try {
     const { id } = req.params;
@@ -36,7 +33,6 @@ export const getCuenta = async (req, res) => {
   }
 };
 
-// 3. GET (Por Abonado) - Ruta extra
 export const getCuentasDeAbonado = async (req, res) => {
   try {
     const { idAbonado } = req.params;
@@ -48,7 +44,6 @@ export const getCuentasDeAbonado = async (req, res) => {
   }
 };
 
-// 4. POST
 export const postCuenta = async (req, res) => {
   try {
     const { id_abonado, numero_cuenta, fecha_inicio } = req.body;
@@ -57,7 +52,6 @@ export const postCuenta = async (req, res) => {
       return res.status(400).json({ error: 'Faltan campos obligatorios (id_abonado, numero_cuenta)' });
     }
 
-    // Si no viene la fecha, usamos la de hoy
     const fecha = fecha_inicio || new Date().toISOString().split('T')[0];
 
     const nuevaCuenta = { id_abonado, numero_cuenta, fecha_inicio: fecha };
@@ -79,7 +73,6 @@ export const postCuenta = async (req, res) => {
   }
 };
 
-// 5. PUT
 export const putCuenta = async (req, res) => {
   try {
     const { id } = req.params;
@@ -105,7 +98,6 @@ export const putCuenta = async (req, res) => {
   }
 };
 
-// 6. DELETE
 export const removeCuenta = async (req, res) => {
   try {
     const { id } = req.params;

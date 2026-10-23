@@ -1,4 +1,3 @@
-// src/controllers/pago.controller.js
 import { 
   getAllPagos, 
   getPagoById, 
@@ -7,7 +6,6 @@ import {
   deletePago 
 } from '../models/pago.model.js';
 
-// 1. GET (Todos)
 export const getPagos = async (req, res) => {
   try {
     const pagos = await getAllPagos();
@@ -18,7 +16,6 @@ export const getPagos = async (req, res) => {
   }
 };
 
-// 2. GET (Por ID)
 export const getPago = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,21 +32,16 @@ export const getPago = async (req, res) => {
   }
 };
 
-// 3. POST (Registrar Pago)
 export const postPago = async (req, res) => {
   try {
-    // 1. Ya NO pedimos el id_usuario aquí
     const { id_cuenta, id_periodo, fecha_pago, monto_pagado, numero_recibo, observacion } = req.body;
 
-        // 👇 AGREGA ESTA LÍNEA PARA DEBUGGEAR
     console.log("Datos del usuario extraídos del Token:", req.usuario); 
     
-    // 2. Extraemos el id_usuario directamente del Token (gracias al middleware)
     const id_usuario = req.usuario.id_usuario; 
 
     console.log("ID Usuario a insertar:", id_usuario); 
 
-    // 3. Validamos que vengan los datos necesarios
     if (!id_cuenta || !id_periodo || !monto_pagado) {
       return res.status(400).json({ error: 'Faltan campos obligatorios (id_cuenta, id_periodo, monto_pagado)' });
     }
@@ -77,7 +69,6 @@ export const postPago = async (req, res) => {
 };
 
 
-// 4. PUT (Actualizar Pago)
 export const putPago = async (req, res) => {
   try {
     const { id } = req.params;
@@ -103,7 +94,6 @@ export const putPago = async (req, res) => {
   }
 };
 
-// 5. DELETE (Anular Pago)
 export const removePago = async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,4 +1,3 @@
-// src/routes/cuentaServicio.routes.js
 import { Router } from 'express';
 import { 
   getCuentas, 

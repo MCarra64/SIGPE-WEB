@@ -1,4 +1,3 @@
-// src/routes/usuario.routes.js
 import { Router } from 'express';
 import { 
   getUsuarios, 

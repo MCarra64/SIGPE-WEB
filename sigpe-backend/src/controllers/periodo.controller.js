@@ -1,4 +1,3 @@
-// src/controllers/periodo.controller.js
 import { 
   getAllPeriodos, 
   getPeriodoById, 
@@ -7,7 +6,6 @@ import {
   deletePeriodo 
 } from '../models/periodo.model.js';
 
-// 1. GET (Todos)
 export const getPeriodos = async (req, res) => {
   try {
     const periodos = await getAllPeriodos();
@@ -18,7 +16,6 @@ export const getPeriodos = async (req, res) => {
   }
 };
 
-// 2. GET (Por ID)
 export const getPeriodo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,7 +32,6 @@ export const getPeriodo = async (req, res) => {
   }
 };
 
-// 3. POST
 export const postPeriodo = async (req, res) => {
   try {
     const { mes, anio, fecha_inicio, fecha_fin } = req.body;
@@ -57,7 +53,6 @@ export const postPeriodo = async (req, res) => {
   }
 };
 
-// 4. PUT
 export const putPeriodo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,7 +75,6 @@ export const putPeriodo = async (req, res) => {
   }
 };
 
-// 5. DELETE
 export const removePeriodo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -93,7 +87,6 @@ export const removePeriodo = async (req, res) => {
     res.json({ mensaje: 'Periodo eliminado correctamente' });
   } catch (error) {
     console.error(error);
-    // Si intentamos borrar un periodo que ya tiene pagos o cuotas asociadas, MySQL lanzará este error:
     if (error.code === 'ER_ROW_IS_REFERENCED_2') {
       return res.status(400).json({ error: 'No se puede eliminar el periodo porque tiene cuotas o pagos asociados' });
     }

@@ -1,7 +1,5 @@
-// src/models/cuentaServicio.model.js
 import { pool } from '../config/db.js';
 
-// 1. Obtener todas las cuentas (con datos del abonado)
 export const getAllCuentas = async () => {
   const query = `
     SELECT 
@@ -18,7 +16,6 @@ export const getAllCuentas = async () => {
   return rows;
 };
 
-// 2. Obtener una cuenta por ID
 export const getCuentaById = async (id) => {
   const query = `
     SELECT 
@@ -36,7 +33,6 @@ export const getCuentaById = async (id) => {
   return rows[0];
 };
 
-// 3. Obtener las cuentas de un abonado específico (muy útil)
 export const getCuentasByAbonado = async (idAbonado) => {
   const query = `
     SELECT id_cuenta, numero_cuenta, fecha_inicio, estado 
@@ -47,7 +43,6 @@ export const getCuentasByAbonado = async (idAbonado) => {
   return rows;
 };
 
-// 4. Crear una cuenta
 export const createCuenta = async (cuentaData) => {
   const { id_abonado, numero_cuenta, fecha_inicio } = cuentaData;
   const query = `
@@ -58,7 +53,6 @@ export const createCuenta = async (cuentaData) => {
   return result.insertId;
 };
 
-// 5. Actualizar una cuenta
 export const updateCuenta = async (id, cuentaData) => {
   const { numero_cuenta, estado } = cuentaData;
   const query = `
@@ -70,7 +64,6 @@ export const updateCuenta = async (id, cuentaData) => {
   return result.affectedRows;
 };
 
-// 6. Desactivar cuenta (Soft Delete)
 export const deleteCuenta = async (id) => {
   const query = `UPDATE cuentas_servicio SET estado = 'Inactivo' WHERE id_cuenta = ?`;
   const [result] = await pool.execute(query, [id]);

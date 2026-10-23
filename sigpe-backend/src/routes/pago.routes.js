@@ -1,4 +1,3 @@
-// src/routes/pago.routes.js
 import { Router } from 'express';
 import { 
   getPagos, 
