@@ -7,6 +7,7 @@ import cuentaServicioRoutes from './routes/cuentaServicio.routes.js';
 import periodoRoutes from './routes/periodo.routes.js';
 import cuotaRoutes from './routes/cuota.routes.js';
 import pagoRoutes from './routes/pago.routes.js';
+import reporteRoutes from './routes/reporte.routes.js';
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ app.use('/api/cuentas', cuentaServicioRoutes);
 app.use('/api/periodos', periodoRoutes);
 app.use('/api/cuotas', cuotaRoutes);
 app.use('/api/pagos', pagoRoutes);
+app.use('/api/reportes', reporteRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Ruta no encontrada' });
