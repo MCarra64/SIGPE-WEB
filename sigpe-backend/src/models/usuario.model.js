@@ -41,3 +41,16 @@ export const getUsuarioByUsername = async (username) => {
   const [rows] = await pool.execute(query, [username]);
   return rows[0];
 };
+
+// Actualizar solo la contraseña
+export const updatePassword = async (id, newPasswordHash) => {
+  const query = `UPDATE usuarios SET password_hash = ? WHERE id_usuario = ?`;
+  const [result] = await pool.execute(query, [newPasswordHash, id]);
+  return result.affectedRows;
+};
+
+export const getUsuarioById = async (id) => {
+  const query = `SELECT * FROM usuarios WHERE id_usuario = ?`;
+  const [rows] = await pool.execute(query, [id]);
+  return rows[0];
+};

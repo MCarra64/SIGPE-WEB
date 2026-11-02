@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SIGPE - Junta de Agua | Residentes y Pagos</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#005e9a",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed": "#94f990",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#404751",
+                        "surface-bright": "#f8f9ff",
+                        "surface-variant": "#d3e4fe",
+                        "on-background": "#0b1c30",
+                        "on-primary-fixed-variant": "#00497b",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#9ccaff",
+                        "surface-container-high": "#dce9ff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#d0e4ff",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e5eeff",
+                        "on-primary-fixed": "#001d35",
+                        "secondary": "#006e1c",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "outline-variant": "#c0c7d3",
+                        "on-primary-container": "#f9faff",
+                        "surface-tint": "#0062a1",
+                        "on-tertiary-container": "#f4fcff",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-container": "#00731e",
+                        "primary-container": "#0077c2",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#001f27",
+                        "on-secondary-fixed-variant": "#005313",
+                        "tertiary": "#006378",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-container": "#007e98",
+                        "inverse-primary": "#9ccaff",
+                        "tertiary-fixed-dim": "#4cd6fb",
+                        "outline": "#707882",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004e5f",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#91f78e",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#78dc77",
+                        "on-secondary-fixed": "#002204",
+                        "tertiary-fixed": "#b3ebff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "xl": "80px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "container-max": "1200px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Work Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Work Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Work Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-sm": ["Work Sans"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .table-row-hover:hover {
+            background-color: theme('colors.surface-container-low');
+        }
+
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row antialiased overflow-x-hidden">
+    <!-- SIDEBAR -->
+    <!-- Fondo oscuro para móvil -->
+    <div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[60] transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
+        id="mobile-drawer-backdrop"></div>
+
+    <!-- Menú Móvil -->
+    <aside
+        class="fixed top-0 left-0 bottom-0 w-72 max-w-[85vw] bg-surface-container-low border-r border-outline-variant z-[70] flex flex-col py-md px-base transition-transform duration-300 -translate-x-full md:hidden shadow-2xl"
+        id="mobile-drawer">
+        <div class="flex items-center justify-between mb-lg px-sm">
+            <div class="flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary text-[32px]">water_drop</span>
+                <div>
+                    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                        SIGPE</h1>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+                </div>
+            </div>
+            <button aria-label="Cerrar menú"
+                class="p-xs text-on-surface-variant hover:text-primary rounded-lg transition-colors"
+                id="mobile-drawer-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <nav class="flex-1 space-y-sm">
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="dashboard.html">
+                <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                <span>Panel de Control</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="residentes.html">
+                <span class="material-symbols-outlined" data-icon="group">group</span>
+                <span>Residentes y Pagos</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="gastos.html">
+                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                <span>Gastos</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="presupuesto.html">
+                <span class="material-symbols-outlined" data-icon="pie_chart">pie_chart</span>
+                <span>Presupuesto</span>
+            </a>
+        </nav>
+        <!-- Botón cerrar sesión móvil -->
+        <div class="mt-auto border-t border-outline-variant/40 pt-3">
+            <a href="#"
+                class="flex items-center gap-sm px-sm py-sm rounded-lg text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span>Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Menú Escritorio -->
+    <aside
+        class="bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-0 border-r border-outline-variant hidden md:flex flex-col py-md px-base z-50">
+        <div class="flex items-center gap-3 mb-8 px-4">
+            <div
+                class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">water_drop</span>
+            </div>
+            <div>
+                <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                    SIGPE</h1>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Panel de Control</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="residentes.html">
+                <span class="material-symbols-outlined">group</span>
+                <span>Residentes y Pagos</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="gastos.html">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <span>Gastos</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="presupuesto.html">
+                <span class="material-symbols-outlined">pie_chart</span>
+                <span>Presupuesto</span>
+            </a>
+        </nav>
+        <!-- Botón cerrar sesión escritorio -->
+        <div class="mt-auto border-t border-outline-variant/40 pt-3">
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span>Cerrar Sesión</span>
+            </a>
+            <div class="px-4 pt-3 flex items-center justify-between text-xs text-on-surface-variant">
+                <span>SIGPE v2.4</span><span class="text-secondary font-medium">En línea</span>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 md:ml-64 flex flex-col min-h-screen min-w-0">
+        <!-- TopNavBar Component -->
+        <header
+            class="bg-surface-bright dark:bg-surface-dim sticky top-0 z-40 border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-4 md:px-6 w-full">
+            <!-- Botón menú móvil y Logo -->
+            <div class="flex items-center gap-2">
+                <button id="mobile-menu-btn" aria-label="Abrir menú"
+                    class="md:hidden text-on-surface-variant hover:text-primary transition-colors p-2 rounded-lg hover:bg-surface-container-high">
+                    <span class="material-symbols-outlined text-[24px]">menu</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                    <div class="leading-none">
+                        <span class="font-headline-md font-bold text-primary text-base leading-tight block">SIGPE</span>
+                        <span class="text-[11px] text-on-surface-variant leading-tight block">Junta
+                            de Agua</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perfil de Usuario y Ajustes -->
+            <div class="flex items-center gap-2 sm:gap-4 relative">
+                <!-- Botón de Ajustes (Engranaje) -->
+                <button id="btn-settings" aria-label="Configuración"
+                    class="text-on-surface-variant hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container-high">
+                    <span class="material-symbols-outlined text-[22px]">settings</span>
+                </button>
+
+                <!-- Menú desplegable del usuario -->
+                <div class="relative">
+                    <button id="user-menu-btn"
+                        class="flex items-center gap-2 hover:bg-surface-container-high p-1 sm:pr-3 rounded-full transition-colors border border-transparent hover:border-outline-variant">
+                        <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shrink-0"
+                            id="user-initials">
+                            A
+                        </div>
+                        <div class="hidden sm:flex flex-col items-start">
+                            <span class="text-sm font-semibold text-on-surface leading-tight"
+                                id="user-display-name">Cargando...</span>
+                            <span class="text-xs text-on-surface-variant" id="user-display-role">Rol</span>
+                        </div>
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant text-[18px] hidden sm:block">expand_more</span>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="user-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg py-1 z-50">
+                        <div class="px-4 py-2 border-b border-outline-variant/50 sm:hidden">
+                            <p class="text-sm font-semibold text-on-surface" id="mobile-user-name">Cargando...</p>
+                            <p class="text-xs text-on-surface-variant" id="mobile-user-role">Rol</p>
+                        </div>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"
+                            id="dropdown-settings">Ajustes de Cuenta</a>
+                        <button
+                            class="w-full text-left block px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors font-medium border-t border-outline-variant/50"
+                            id="btn-logout-dropdown">Cerrar Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Modal de Ajustes de Usuario -->
+        <div id="settings-modal"
+            class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+            <div
+                class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-outline-variant">
+                <div
+                    class="flex justify-between items-center p-4 border-b border-outline-variant/50 bg-surface-container-low">
+                    <h3 class="font-headline-sm text-lg font-bold text-on-surface">Ajustes de Cuenta</h3>
+                    <button id="close-settings-modal"
+                        class="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <form id="change-password-form" class="p-6 space-y-4">
+                    <div id="settings-error"
+                        class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm"></div>
+                    <div id="settings-success"
+                        class="hidden bg-secondary-container text-on-secondary-container p-3 rounded-lg text-sm"></div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-on-surface mb-1">Contraseña Actual</label>
+                        <input type="password" id="current-password" required
+                            class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-on-surface mb-1">Nueva Contraseña</label>
+                        <input type="password" id="new-password" required minlength="6"
+                            class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+
+                    <div class="pt-2 flex justify-end gap-2">
+                        <button type="button" id="cancel-settings-btn"
+                            class="px-4 py-2 text-sm font-medium text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">Cancelar</button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium bg-primary text-on-primary hover:bg-primary-container rounded-lg transition-colors shadow-sm">Actualizar
+                            Contraseña</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Canvas -->
+        <main class="flex-1 p-4 sm:p-6 md:p-lg max-w-container-max mx-auto w-full min-w-0">
+            <!-- Page Header -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 sm:mb-8 gap-4">
+                <div>
+                    <h2 class="font-headline-lg text-2xl sm:text-headline-lg text-on-surface font-bold">Residentes y
+                        Pagos</h2>
+                    <p class="font-body-md text-sm sm:text-body-md text-on-surface-variant mt-1">Administre cuentas y
+                        realice seguimiento de pagos.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
+                    <button
+                        class="flex items-center justify-center gap-2 bg-primary text-on-primary px-5 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm active:scale-95 whitespace-nowrap">
+                        <span class="material-symbols-outlined text-[18px]">add</span>
+                        + Nuevo Residente
+                    </button>
+                    <button
+                        class="flex items-center justify-center gap-2 bg-primary text-on-primary px-5 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm active:scale-95 whitespace-nowrap">
+                        <span class="material-symbols-outlined text-[18px]">download</span>
+                        Exportar Reporte de Pagos
+                    </button>
+                </div>
+            </div>
+            <!-- Controls Area -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <!-- Search -->
+                <div
+                    class="md:col-span-5 bg-surface-container-lowest rounded-xl p-3 sm:p-4 shadow-[0px_4px_12px_rgba(0,94,154,0.05)] flex items-center border border-outline-variant/30">
+                    <div class="relative w-full">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                        <input
+                            class="w-full pl-10 pr-4 py-2 bg-transparent border-b border-outline-variant focus:border-primary focus:ring-0 rounded-none font-body-md text-sm sm:text-body-md text-on-surface outline-none transition-colors"
+                            placeholder="Buscar por nombre o número de casa..." type="text">
+                    </div>
+                </div>
+                <!-- Filters -->
+                <div
+                    class="md:col-span-7 bg-surface-container-lowest rounded-xl p-3 sm:p-4 shadow-[0px_4px_12px_rgba(0,94,154,0.05)] border border-outline-variant/30 flex flex-col sm:flex-row sm:items-center gap-3 overflow-hidden">
+                    <span class="font-label-md text-label-md text-on-surface-variant shrink-0">Filtrar Estado:</span>
+                    <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full">
+                        <button
+                            class="px-3.5 py-1.5 rounded-full border border-outline-variant font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors bg-surface-container-lowest whitespace-nowrap shrink-0">
+                            Todos
+                        </button>
+                        <button
+                            class="px-3.5 py-1.5 rounded-full border border-secondary text-secondary bg-secondary/10 font-label-sm text-label-sm hover:bg-secondary/20 transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                            <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            Pagados
+                        </button>
+                        <button
+                            class="px-3.5 py-1.5 rounded-full border border-[#b3261e]/30 text-[#b3261e] bg-[#f9dedc] font-label-sm text-label-sm hover:bg-[#f2b8b5] transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                            <span class="w-2 h-2 rounded-full bg-[#b3261e]"></span>
+                            Mora
+                        </button>
+                        <button
+                            class="px-3.5 py-1.5 rounded-full border border-[#855000]/30 text-[#855000] bg-[#ffdbb0] font-label-sm text-label-sm hover:bg-[#ffc67a] transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                            <span class="w-2 h-2 rounded-full bg-[#855000]"></span>
+                            Pendientes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Table Card -->
+            <div
+                class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_12px_rgba(0,94,154,0.05)] border border-outline-variant/30 overflow-hidden relative border-t-2 border-t-primary-fixed-dim">
+                <div class="overflow-x-auto w-full -webkit-overflow-scrolling-touch">
+                    <table class="w-full text-left border-collapse min-w-[680px]">
+                        <thead>
+                            <tr class="bg-[#F1F5F9] border-b border-outline-variant/50">
+                                <th
+                                    class="py-4 px-4 sm:px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider min-w-[200px]">
+                                    RESIDENTE</th>
+                                <th
+                                    class="py-4 px-4 sm:px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider min-w-[120px]">
+                                    CASA/LOTE</th>
+                                <th
+                                    class="py-4 px-4 sm:px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider min-w-[130px]">
+                                    ESTADO DE PAGO</th>
+                                <th
+                                    class="py-4 px-4 sm:px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider min-w-[130px]">
+                                    ÚLTIMO PAGO</th>
+                                <th
+                                    class="py-4 px-4 sm:px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right min-w-[140px]">
+                                    ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant/30">
+                            <!-- Row 1 -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="py-4 px-4 sm:px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-label-md shrink-0">
+                                            MR
+                                        </div>
+                                        <span class="font-medium whitespace-nowrap">Maria Rodriguez</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">
+                                    Lote 42-A</td>
+                                <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#def7ec] text-[#03543f]">
+                                        Pagado
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">15
+                                    Oct, 2023</td>
+                                <td class="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
+                                    <div class="inline-flex items-center justify-end gap-1">
+                                        <button aria-label="Registrar Pago"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Registrar Pago">
+                                            <span class="material-symbols-outlined text-[20px]">payments</span>
+                                        </button>
+                                        <button aria-label="Editar"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Editar">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button aria-label="Ver Historial"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Ver Historial">
+                                            <span class="material-symbols-outlined text-[20px]">history</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="py-4 px-4 sm:px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-label-md shrink-0">
+                                            JC
+                                        </div>
+                                        <span class="font-medium whitespace-nowrap">Juan Carlos Silva</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">
+                                    Lote 15-B</td>
+                                <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#fde8e8] text-[#9b1c1c]">
+                                        Mora
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">02
+                                    Ago, 2023</td>
+                                <td class="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
+                                    <div class="inline-flex items-center justify-end gap-1">
+                                        <button aria-label="Registrar Pago"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Registrar Pago">
+                                            <span class="material-symbols-outlined text-[20px]">payments</span>
+                                        </button>
+                                        <button aria-label="Editar"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Editar">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button aria-label="Ver Historial"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Ver Historial">
+                                            <span class="material-symbols-outlined text-[20px]">history</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="py-4 px-4 sm:px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-label-md shrink-0">
+                                            AL
+                                        </div>
+                                        <span class="font-medium whitespace-nowrap">Ana Lopez</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">
+                                    Casa 8</td>
+                                <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#fdf6b2] text-[#723b13]">
+                                        Pendiente
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">30
+                                    Sep, 2023</td>
+                                <td class="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
+                                    <div class="inline-flex items-center justify-end gap-1">
+                                        <button aria-label="Registrar Pago"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Registrar Pago">
+                                            <span class="material-symbols-outlined text-[20px]">payments</span>
+                                        </button>
+                                        <button aria-label="Editar"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Editar">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button aria-label="Ver Historial"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Ver Historial">
+                                            <span class="material-symbols-outlined text-[20px]">history</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Row 4 -->
+                            <tr class="table-row-hover transition-colors">
+                                <td class="py-4 px-4 sm:px-6">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-label-md shrink-0">
+                                            FM
+                                        </div>
+                                        <span class="font-medium whitespace-nowrap">Fernando Mendoza</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">
+                                    Lote 99-C</td>
+                                <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#def7ec] text-[#03543f]">
+                                        Pagado
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 sm:px-6 tabular-nums text-on-surface-variant whitespace-nowrap">10
+                                    Oct, 2023</td>
+                                <td class="py-4 px-4 sm:px-6 text-right whitespace-nowrap">
+                                    <div class="inline-flex items-center justify-end gap-1">
+                                        <button aria-label="Registrar Pago"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Registrar Pago">
+                                            <span class="material-symbols-outlined text-[20px]">payments</span>
+                                        </button>
+                                        <button aria-label="Editar"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Editar">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button aria-label="Ver Historial"
+                                            class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors"
+                                            title="Ver Historial">
+                                            <span class="material-symbols-outlined text-[20px]">history</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div
+                    class="bg-surface-bright px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-outline-variant/30">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Mostrando 1
+                        a 4 de 42 residentes</span>
+                    <div class="flex gap-2">
+                        <button aria-label="Página anterior"
+                            class="p-1.5 rounded text-outline hover:text-primary hover:bg-surface-container-low disabled:opacity-50"
+                            disabled="">
+                            <span class="material-symbols-outlined text-xl">chevron_left</span>
+                        </button>
+                        <button aria-label="Página siguiente"
+                            class="p-1.5 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-low">
+                            <span class="material-symbols-outlined text-xl">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Conectar el archivo de autenticación -->
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

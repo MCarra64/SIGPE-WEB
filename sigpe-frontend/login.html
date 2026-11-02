@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>SIGPE - Junta de Agua - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#005e9a", "surface": "#f8f9ff", "on-surface-variant": "#404751",
+                      "on-background": "#0b1c30", "surface-container-lowest": "#ffffff", "error-container": "#ffdad6",
+                      "on-error": "#ffffff", "outline-variant": "#c0c7d3", "surface-container-low": "#eff4ff",
+                      "on-surface": "#0b1c30", "primary-container": "#0077c2", "on-primary": "#ffffff",
+                      "error": "#ba1a1a", "tertiary-container": "#007e98"
+              },
+              "fontFamily": {
+                      "label-md": ["Work Sans"], "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Work Sans"], "headline-sm": ["Plus Jakarta Sans"],
+                      "body-sm": ["Work Sans"], "body-lg": ["Work Sans"]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        body { background-color: #F8FAFC; }
+        .card-shadow { box-shadow: 0px 4px 12px rgba(0, 94, 154, 0.05); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex items-center justify-center p-4 md:p-8">
+    <main class="w-full max-w-[1000px] flex flex-col md:flex-row bg-surface-container-lowest rounded-xl card-shadow border border-outline-variant/30 overflow-hidden">
+        
+        <!-- Left Side: Login Form -->
+        <div class="flex-1 p-8 md:p-12 flex flex-col justify-center">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">water_drop</span>
+                    </div>
+                    <h1 class="font-headline-lg text-3xl font-bold text-primary tracking-tight">SIGPE</h1>
+                </div>
+                <p class="font-body-lg text-on-surface-variant mt-2">Portal de Gestión - Junta de Agua</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-5">
+                <div id="errorMessage" class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm mb-4"></div>
+
+                <div>
+                    <label class="font-label-md text-label-md text-on-surface block mb-2" for="username">Nombre de Usuario</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">person</span>
+                        <input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-3 pl-10 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow font-body-md" id="username" name="username" placeholder="admin_sigpe" type="text" required>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-label-md text-label-md text-on-surface block" for="password">Contraseña</label>
+                        <a class="font-label-md text-primary hover:underline" href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">lock</span>
+                        <input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-3 pl-10 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow font-body-md" id="password" name="password" placeholder="••••••••" type="password" required>
+                    </div>
+                </div>
+                
+                <button id="submitBtn" class="w-full bg-primary text-on-primary font-label-md py-3 px-4 rounded-lg shadow-sm hover:bg-primary-container hover:text-on-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-6 font-semibold" type="submit">
+                    <span id="btnText">Iniciar Sesión</span>
+                    <span id="btnIcon" class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    <span id="btnLoader" class="hidden animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
+                </button>
+            </form>
+            <div class="mt-8 text-center">
+                <p class="font-body-sm text-on-surface-variant">© 2026 SIGPE - Junta de Agua. Secure Access Portal.</p>
+            </div>
+        </div>
+        
+        <!-- Right Side: Branding (Usando gradiente y estilo del design system) -->
+        <div class="hidden md:flex flex-1 bg-primary-container relative items-center justify-center p-12 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container z-0"></div>
+            <!-- Decoración de fondo -->
+            <div class="absolute top-[-20%] right-[-10%] w-[70%] h-[70%] rounded-full bg-white/10 blur-3xl"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-tertiary-container/30 blur-3xl"></div>
+            
+            <div class="relative z-10 text-center text-on-primary">
+                <span class="material-symbols-outlined text-[80px] opacity-80 mb-4 block">account_balance</span>
+                <h2 class="font-headline-lg text-3xl mb-4">Gestión Transparente</h2>
+                <p class="font-body-lg opacity-90 max-w-sm mx-auto">Administrando los recursos de nuestra comunidad con eficiencia y claridad.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lógica de conexión con el backend -->
+    <script>
+        // Si ya hay un token guardado, redirigir directo al dashboard
+        if (localStorage.getItem('token')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const errorDiv = document.getElementById('errorMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnLoader = document.getElementById('btnLoader');
+
+            // Resetear UI
+            errorDiv.classList.add('hidden');
+            submitBtn.disabled = true;
+            btnText.textContent = 'Validando...';
+            btnIcon.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+
+            try {
+                // Petición al backend en el puerto 4000
+                const response = await fetch('http://localhost:4000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    window.location.href = 'dashboard.html'; 
+                } else {
+                    throw new Error(data.error || 'Credenciales incorrectas');
+                }
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                btnText.textContent = 'Iniciar Sesión';
+                btnIcon.classList.remove('hidden');
+                btnLoader.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

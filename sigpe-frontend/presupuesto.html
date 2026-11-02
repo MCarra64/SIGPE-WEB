@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>Presupuesto Anual - SIGPE</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap"
+                rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet">
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "on-surface": "#0b1c30",
+                                                "on-secondary-container": "#00731e",
+                                                "on-tertiary": "#ffffff",
+                                                "inverse-primary": "#9ccaff",
+                                                "background": "#f8f9ff",
+                                                "outline-variant": "#c0c7d3",
+                                                "surface-bright": "#f8f9ff",
+                                                "on-tertiary-fixed": "#001f27",
+                                                "primary-container": "#0077c2",
+                                                "on-secondary": "#ffffff",
+                                                "surface-container-high": "#dce9ff",
+                                                "primary-fixed": "#d0e4ff",
+                                                "tertiary-fixed-dim": "#4cd6fb",
+                                                "on-primary": "#ffffff",
+                                                "tertiary-fixed": "#b3ebff",
+                                                "surface-tint": "#0062a1",
+                                                "on-error-container": "#93000a",
+                                                "error": "#ba1a1a",
+                                                "on-error": "#ffffff",
+                                                "secondary-fixed": "#94f990",
+                                                "on-secondary-fixed-variant": "#005313",
+                                                "on-tertiary-container": "#f4fcff",
+                                                "on-primary-container": "#f9faff",
+                                                "error-container": "#ffdad6",
+                                                "surface-container-low": "#eff4ff",
+                                                "outline": "#707882",
+                                                "surface-dim": "#cbdbf5",
+                                                "surface": "#f8f9ff",
+                                                "surface-container-lowest": "#ffffff",
+                                                "inverse-on-surface": "#eaf1ff",
+                                                "tertiary-container": "#007e98",
+                                                "secondary-fixed-dim": "#78dc77",
+                                                "tertiary": "#006378",
+                                                "on-tertiary-fixed-variant": "#004e5f",
+                                                "on-secondary-fixed": "#002204",
+                                                "inverse-surface": "#213145",
+                                                "on-primary-fixed": "#001d35",
+                                                "surface-container-highest": "#d3e4fe",
+                                                "on-background": "#0b1c30",
+                                                "surface-variant": "#d3e4fe",
+                                                "primary": "#005e9a",
+                                                "on-surface-variant": "#404751",
+                                                "secondary": "#006e1c",
+                                                "secondary-container": "#91f78e",
+                                                "on-primary-fixed-variant": "#00497b",
+                                                "surface-container": "#e5eeff",
+                                                "primary-fixed-dim": "#9ccaff"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "base": "8px",
+                                                "md": "24px",
+                                                "lg": "48px",
+                                                "gutter": "24px",
+                                                "xl": "80px",
+                                                "container-max": "1200px",
+                                                "xs": "4px",
+                                                "sm": "12px"
+                                        },
+                                        "fontFamily": {
+                                                "headline-md": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-sm": [
+                                                        "Work Sans"
+                                                ],
+                                                "label-md": [
+                                                        "Work Sans"
+                                                ],
+                                                "headline-lg": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "label-sm": [
+                                                        "Work Sans"
+                                                ],
+                                                "body-md": [
+                                                        "Work Sans"
+                                                ],
+                                                "headline-lg-mobile": [
+                                                        "Plus Jakarta Sans"
+                                                ],
+                                                "body-lg": [
+                                                        "Work Sans"
+                                                ],
+                                                "headline-sm": [
+                                                        "Plus Jakarta Sans"
+                                                ]
+                                        },
+                                        "fontSize": {
+                                                "headline-md": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "1.3",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "body-sm": [
+                                                        "14px",
+                                                        {
+                                                                "lineHeight": "1.4",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "label-md": [
+                                                        "12px",
+                                                        {
+                                                                "lineHeight": "1",
+                                                                "letterSpacing": "0.05em",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ],
+                                                "headline-lg": [
+                                                        "32px",
+                                                        {
+                                                                "lineHeight": "1.2",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "label-sm": [
+                                                        "11px",
+                                                        {
+                                                                "lineHeight": "1",
+                                                                "fontWeight": "500"
+                                                        }
+                                                ],
+                                                "body-md": [
+                                                        "16px",
+                                                        {
+                                                                "lineHeight": "1.5",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-lg-mobile": [
+                                                        "24px",
+                                                        {
+                                                                "lineHeight": "1.2",
+                                                                "fontWeight": "700"
+                                                        }
+                                                ],
+                                                "body-lg": [
+                                                        "18px",
+                                                        {
+                                                                "lineHeight": "1.6",
+                                                                "fontWeight": "400"
+                                                        }
+                                                ],
+                                                "headline-sm": [
+                                                        "20px",
+                                                        {
+                                                                "lineHeight": "1.4",
+                                                                "fontWeight": "600"
+                                                        }
+                                                ]
+                                        }
+                                },
+                        },
+                }
+        </script>
+</head>
+
+<body class="bg-background text-on-surface font-body-md h-screen overflow-hidden flex">
+        <!-- SIDEBAR -->
+        <!-- Fondo oscuro para móvil -->
+        <div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[60] transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
+                id="mobile-drawer-backdrop"></div>
+
+        <!-- Menú Móvil -->
+        <aside class="fixed top-0 left-0 bottom-0 w-72 max-w-[85vw] bg-surface-container-low border-r border-outline-variant z-[70] flex flex-col py-md px-base transition-transform duration-300 -translate-x-full md:hidden shadow-2xl"
+                id="mobile-drawer">
+                <div class="flex items-center justify-between mb-lg px-sm">
+                        <div class="flex items-center gap-sm">
+                                <span class="material-symbols-outlined text-primary text-[32px]">water_drop</span>
+                                <div>
+                                        <h1
+                                                class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                                                SIGPE</h1>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+                                </div>
+                        </div>
+                        <button aria-label="Cerrar menú"
+                                class="p-xs text-on-surface-variant hover:text-primary rounded-lg transition-colors"
+                                id="mobile-drawer-close">
+                                <span class="material-symbols-outlined">close</span>
+                        </button>
+                </div>
+                <nav class="flex-1 space-y-sm">
+                        <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="dashboard.html">
+                                <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                                <span>Panel de Control</span>
+                        </a>
+                        <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="residentes.html">
+                                <span class="material-symbols-outlined" data-icon="group">group</span>
+                                <span>Residentes y Pagos</span>
+                        </a>
+                        <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="gastos.html">
+                                <span class="material-symbols-outlined"
+                                        data-icon="account_balance_wallet">account_balance_wallet</span>
+                                <span>Gastos</span>
+                        </a>
+                        <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="presupuesto.html">
+                                <span class="material-symbols-outlined" data-icon="pie_chart">pie_chart</span>
+                                <span>Presupuesto</span>
+                        </a>
+                </nav>
+                <!-- Botón cerrar sesión móvil -->
+                <div class="mt-auto border-t border-outline-variant/40 pt-3">
+                        <a href="#"
+                                class="flex items-center gap-sm px-sm py-sm rounded-lg text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                                <span class="material-symbols-outlined text-[20px]">logout</span>
+                                <span>Cerrar Sesión</span>
+                        </a>
+                </div>
+        </aside>
+
+        <!-- Menú Escritorio -->
+        <aside
+                class="bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-0 border-r border-outline-variant hidden md:flex flex-col py-md px-base z-50">
+                <div class="flex items-center gap-3 mb-8 px-4">
+                        <div
+                                class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+                                <span class="material-symbols-outlined text-[24px]">water_drop</span>
+                        </div>
+                        <div>
+                                <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                                        SIGPE</h1>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+                        </div>
+                </div>
+                <nav class="flex-1 space-y-2">
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="dashboard.html">
+                                <span class="material-symbols-outlined">dashboard</span>
+                                <span>Panel de Control</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="residentes.html">
+                                <span class="material-symbols-outlined">group</span>
+                                <span>Residentes y Pagos</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="gastos.html">
+                                <span class="material-symbols-outlined">account_balance_wallet</span>
+                                <span>Gastos</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                                href="presupuesto.html">
+                                <span class="material-symbols-outlined">pie_chart</span>
+                                <span>Presupuesto</span>
+                        </a>
+                </nav>
+                <!-- Botón cerrar sesión escritorio -->
+                <div class="mt-auto border-t border-outline-variant/40 pt-3">
+                        <a href="#"
+                                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                                <span class="material-symbols-outlined text-[20px]">logout</span>
+                                <span>Cerrar Sesión</span>
+                        </a>
+                        <div class="px-4 pt-3 flex items-center justify-between text-xs text-on-surface-variant">
+                                <span>SIGPE v2.4</span><span class="text-secondary font-medium">En línea</span>
+                        </div>
+                </div>
+        </aside>
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col md:ml-64 h-full overflow-hidden w-full">
+                <!-- TopNavBar Component -->
+                <header
+                        class="bg-surface-bright dark:bg-surface-dim sticky top-0 z-40 border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-4 md:px-6 w-full">
+                        <!-- Botón menú móvil y Logo -->
+                        <div class="flex items-center gap-2">
+                                <button id="mobile-menu-btn" aria-label="Abrir menú"
+                                        class="md:hidden text-on-surface-variant hover:text-primary transition-colors p-2 rounded-lg hover:bg-surface-container-high">
+                                        <span class="material-symbols-outlined text-[24px]">menu</span>
+                                </button>
+                                <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-2xl"
+                                                style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                                        <div class="leading-none">
+                                                <span
+                                                        class="font-headline-md font-bold text-primary text-base leading-tight block">SIGPE</span>
+                                                <span class="text-[11px] text-on-surface-variant leading-tight block">Junta
+                                                        de Agua</span>
+                                        </div>
+                                </div>
+                        </div>
+
+                        <!-- Perfil de Usuario y Ajustes -->
+                        <div class="flex items-center gap-2 sm:gap-4 relative">
+                                <!-- Botón de Ajustes (Engranaje) -->
+                                <button id="btn-settings" aria-label="Configuración"
+                                        class="text-on-surface-variant hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container-high">
+                                        <span class="material-symbols-outlined text-[22px]">settings</span>
+                                </button>
+
+                                <!-- Menú desplegable del usuario -->
+                                <div class="relative">
+                                        <button id="user-menu-btn"
+                                                class="flex items-center gap-2 hover:bg-surface-container-high p-1 sm:pr-3 rounded-full transition-colors border border-transparent hover:border-outline-variant">
+                                                <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shrink-0"
+                                                        id="user-initials">
+                                                        A
+                                                </div>
+                                                <div class="hidden sm:flex flex-col items-start">
+                                                        <span class="text-sm font-semibold text-on-surface leading-tight"
+                                                                id="user-display-name">Cargando...</span>
+                                                        <span class="text-xs text-on-surface-variant"
+                                                                id="user-display-role">Rol</span>
+                                                </div>
+                                                <span
+                                                        class="material-symbols-outlined text-on-surface-variant text-[18px] hidden sm:block">expand_more</span>
+                                        </button>
+
+                                        <!-- Dropdown Menu -->
+                                        <div id="user-dropdown"
+                                                class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg py-1 z-50">
+                                                <div class="px-4 py-2 border-b border-outline-variant/50 sm:hidden">
+                                                        <p class="text-sm font-semibold text-on-surface"
+                                                                id="mobile-user-name">Cargando...</p>
+                                                        <p class="text-xs text-on-surface-variant"
+                                                                id="mobile-user-role">Rol</p>
+                                                </div>
+                                                <a href="#"
+                                                        class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"
+                                                        id="dropdown-settings">Ajustes de Cuenta</a>
+                                                <button class="w-full text-left block px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors font-medium border-t border-outline-variant/50"
+                                                        id="btn-logout-dropdown">Cerrar Sesión</button>
+                                        </div>
+                                </div>
+                        </div>
+                </header>
+                <!-- Modal de Ajustes de Usuario -->
+                <div id="settings-modal"
+                        class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+                        <div
+                                class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-outline-variant">
+                                <div
+                                        class="flex justify-between items-center p-4 border-b border-outline-variant/50 bg-surface-container-low">
+                                        <h3 class="font-headline-sm text-lg font-bold text-on-surface">Ajustes de Cuenta
+                                        </h3>
+                                        <button id="close-settings-modal"
+                                                class="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors">
+                                                <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                </div>
+
+                                <form id="change-password-form" class="p-6 space-y-4">
+                                        <div id="settings-error"
+                                                class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm">
+                                        </div>
+                                        <div id="settings-success"
+                                                class="hidden bg-secondary-container text-on-secondary-container p-3 rounded-lg text-sm">
+                                        </div>
+
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Contraseña
+                                                        Actual</label>
+                                                <input type="password" id="current-password" required
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Nueva
+                                                        Contraseña</label>
+                                                <input type="password" id="new-password" required minlength="6"
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+
+                                        <div class="pt-2 flex justify-end gap-2">
+                                                <button type="button" id="cancel-settings-btn"
+                                                        class="px-4 py-2 text-sm font-medium text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">Cancelar</button>
+                                                <button type="submit"
+                                                        class="px-4 py-2 text-sm font-medium bg-primary text-on-primary hover:bg-primary-container rounded-lg transition-colors shadow-sm">Actualizar
+                                                        Contraseña</button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+                <!-- Page Content -->
+                <main class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-lg lg:p-xl bg-background">
+                        <div class="max-w-container-max mx-auto space-y-6 sm:space-y-8 md:space-y-xl">
+                                <!-- Page Header -->
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-sm">
+                                        <div>
+                                                <h2
+                                                        class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">
+                                                        Presupuesto Anual</h2>
+                                                <p class="font-body-md text-body-md text-on-surface-variant">Monitoreo y
+                                                        planificación de fondos para el año fiscal en curso.</p>
+                                        </div>
+                                        <div
+                                                class="flex items-center self-start sm:self-auto bg-surface-container-low rounded-lg p-xs border border-outline-variant">
+                                                <span
+                                                        class="material-symbols-outlined text-on-surface-variant pl-xs text-[20px]">calendar_today</span>
+                                                <select
+                                                        class="bg-transparent border-none font-label-md text-label-md text-on-surface focus:ring-0 cursor-pointer pr-6 py-1">
+                                                        <option>Año Fiscal 2024</option>
+                                                        <option>Año Fiscal 2023</option>
+                                                        <option>Año Fiscal 2022</option>
+                                                </select>
+                                        </div>
+                                </div>
+                                <!-- KPI Overview Grid (Stacked on mobile, 3 columns on tablet/desktop) -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-md">
+                                        <!-- Total Budget -->
+                                        <div
+                                                class="bg-surface-container-lowest rounded-xl p-4 sm:p-md border-t-2 border-primary-container shadow-[0_4px_12px_rgba(0,119,194,0.05)] relative overflow-hidden flex flex-col justify-between">
+                                                <div
+                                                        class="absolute -right-6 -top-6 text-surface-variant opacity-30 pointer-events-none">
+                                                        <span
+                                                                class="material-symbols-outlined text-[100px] sm:text-[120px]">account_balance</span>
+                                                </div>
+                                                <div class="relative z-10">
+                                                        <p
+                                                                class="font-label-md text-label-md text-on-surface-variant uppercase mb-xs">
+                                                                Presupuesto Total</p>
+                                                        <h3
+                                                                class="font-headline-lg text-2xl sm:text-headline-lg text-on-surface mb-sm">
+                                                                $125,000.00</h3>
+                                                        <div
+                                                                class="flex items-center text-primary font-body-sm text-body-sm bg-primary-container/10 w-fit px-sm py-xs rounded-full">
+                                                                <span
+                                                                        class="material-symbols-outlined text-[16px] mr-xs">trending_up</span>
+                                                                +5% vs 2023
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <!-- Executed -->
+                                        <div
+                                                class="bg-surface-container-lowest rounded-xl p-4 sm:p-md border-t-2 border-tertiary-container shadow-[0_4px_12px_rgba(0,119,194,0.05)] flex flex-col justify-between">
+                                                <div>
+                                                        <p
+                                                                class="font-label-md text-label-md text-on-surface-variant uppercase mb-xs">
+                                                                Fondos Ejecutados</p>
+                                                        <h3
+                                                                class="font-headline-lg text-2xl sm:text-headline-lg text-on-surface mb-sm">
+                                                                $82,500.00</h3>
+                                                </div>
+                                                <div>
+                                                        <div class="w-full bg-surface-variant rounded-full h-2 mt-auto">
+                                                                <div class="bg-tertiary-container h-2 rounded-full"
+                                                                        style="width: 66%"></div>
+                                                        </div>
+                                                        <p
+                                                                class="font-label-sm text-label-sm text-on-surface-variant mt-xs text-right">
+                                                                66% del total</p>
+                                                </div>
+                                        </div>
+                                        <!-- Available -->
+                                        <div
+                                                class="bg-surface-container-lowest rounded-xl p-4 sm:p-md border-t-2 border-secondary shadow-[0_4px_12px_rgba(0,119,194,0.05)] flex flex-col justify-between">
+                                                <div>
+                                                        <p
+                                                                class="font-label-md text-label-md text-on-surface-variant uppercase mb-xs">
+                                                                Fondos Disponibles</p>
+                                                        <h3
+                                                                class="font-headline-lg text-2xl sm:text-headline-lg text-on-surface mb-sm">
+                                                                $42,500.00</h3>
+                                                </div>
+                                                <div>
+                                                        <div class="w-full bg-surface-variant rounded-full h-2 mt-auto">
+                                                                <div class="bg-secondary h-2 rounded-full"
+                                                                        style="width: 34%"></div>
+                                                        </div>
+                                                        <p
+                                                                class="font-label-sm text-label-sm text-on-surface-variant mt-xs text-right">
+                                                                34% del total</p>
+                                                </div>
+                                        </div>
+                                </div>
+                                <!-- Detailed Breakdown -->
+                                <div
+                                        class="bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(0,119,194,0.05)] p-4 sm:p-6 md:p-lg border border-outline-variant/30 w-full">
+                                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4 sm:mb-md">
+                                                Desglose por Categoría</h3>
+                                        <div class="space-y-6 sm:space-y-lg">
+                                                <!-- Category 1 -->
+                                                <div>
+                                                        <div
+                                                                class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 sm:gap-0 mb-sm">
+                                                                <div>
+                                                                        <h4
+                                                                                class="font-body-lg text-base sm:text-body-lg text-on-surface font-semibold flex items-center gap-xs">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-primary text-[20px] sm:text-[24px]">plumbing</span>
+                                                                                Mantenimiento de Infraestructura
+                                                                        </h4>
+                                                                        <p
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant">
+                                                                                Reparación de tuberías, bombas y plantas
+                                                                                de tratamiento.</p>
+                                                                </div>
+                                                                <div
+                                                                        class="text-left sm:text-right mt-1 sm:mt-0 flex sm:block items-baseline gap-1">
+                                                                        <span
+                                                                                class="font-body-md text-body-md font-semibold text-on-surface tabular-nums">$45,000.00</span>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant tabular-nums sm:block">/
+                                                                                $50,000.00</span>
+                                                                </div>
+                                                        </div>
+                                                        <div class="w-full bg-surface-variant rounded-full h-3">
+                                                                <div class="bg-primary h-3 rounded-full"
+                                                                        style="width: 90%"></div>
+                                                        </div>
+                                                        <div
+                                                                class="flex justify-between items-center mt-xs flex-wrap gap-1">
+                                                                <span
+                                                                        class="font-label-sm text-label-sm text-error bg-error-container text-on-error-container px-2 py-0.5 rounded">Atención
+                                                                        requerida</span>
+                                                                <span
+                                                                        class="font-label-sm text-label-sm text-on-surface-variant">90%
+                                                                        Ejecutado</span>
+                                                        </div>
+                                                </div>
+                                                <!-- Category 2 -->
+                                                <div>
+                                                        <div
+                                                                class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 sm:gap-0 mb-sm">
+                                                                <div>
+                                                                        <h4
+                                                                                class="font-body-lg text-base sm:text-body-lg text-on-surface font-semibold flex items-center gap-xs">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-tertiary text-[20px] sm:text-[24px]">bolt</span>
+                                                                                Gastos Operativos (Energía)
+                                                                        </h4>
+                                                                        <p
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant">
+                                                                                Electricidad para estaciones de bombeo
+                                                                                principales.</p>
+                                                                </div>
+                                                                <div
+                                                                        class="text-left sm:text-right mt-1 sm:mt-0 flex sm:block items-baseline gap-1">
+                                                                        <span
+                                                                                class="font-body-md text-body-md font-semibold text-on-surface tabular-nums">$20,000.00</span>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant tabular-nums sm:block">/
+                                                                                $35,000.00</span>
+                                                                </div>
+                                                        </div>
+                                                        <div class="w-full bg-surface-variant rounded-full h-3">
+                                                                <div class="bg-tertiary h-3 rounded-full"
+                                                                        style="width: 57%"></div>
+                                                        </div>
+                                                        <div class="flex justify-end mt-xs">
+                                                                <span
+                                                                        class="font-label-sm text-label-sm text-on-surface-variant">57%
+                                                                        Ejecutado</span>
+                                                        </div>
+                                                </div>
+                                                <!-- Category 3 -->
+                                                <div>
+                                                        <div
+                                                                class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 sm:gap-0 mb-sm">
+                                                                <div>
+                                                                        <h4
+                                                                                class="font-body-lg text-base sm:text-body-lg text-on-surface font-semibold flex items-center gap-xs">
+                                                                                <span
+                                                                                        class="material-symbols-outlined text-secondary text-[20px] sm:text-[24px]">admin_panel_settings</span>
+                                                                                Administración y Personal
+                                                                        </h4>
+                                                                        <p
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant">
+                                                                                Sueldos, material de oficina y software
+                                                                                (SIGPE).</p>
+                                                                </div>
+                                                                <div
+                                                                        class="text-left sm:text-right mt-1 sm:mt-0 flex sm:block items-baseline gap-1">
+                                                                        <span
+                                                                                class="font-body-md text-body-md font-semibold text-on-surface tabular-nums">$17,500.00</span>
+                                                                        <span
+                                                                                class="font-body-sm text-body-sm text-on-surface-variant tabular-nums sm:block">/
+                                                                                $40,000.00</span>
+                                                                </div>
+                                                        </div>
+                                                        <div class="w-full bg-surface-variant rounded-full h-3">
+                                                                <div class="bg-secondary h-3 rounded-full"
+                                                                        style="width: 43%"></div>
+                                                        </div>
+                                                        <div class="flex justify-end mt-xs">
+                                                                <span
+                                                                        class="font-label-sm text-label-sm text-on-surface-variant">43%
+                                                                        Ejecutado</span>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div
+                                                class="mt-6 sm:mt-xl pt-md border-t border-outline-variant flex justify-end">
+                                                <button
+                                                        class="w-full sm:w-auto justify-center bg-primary text-on-primary font-label-md text-label-md px-md py-sm rounded-lg hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-xs active:scale-95 duration-150">
+                                                        <span
+                                                                class="material-symbols-outlined text-[18px]">download</span>
+                                                        Descargar Reporte PDF
+                                                </button>
+                                        </div>
+                                </div>
+                        </div>
+                </main>
+        </div>
+        <!-- Conectar el archivo de autenticación -->
+        <script src="js/auth.js"></script>
+</body>
+
+</html>

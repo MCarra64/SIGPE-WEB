@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Gestión de Gastos - SIGPE Junta de Agua</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#0b1c30",
+                        "on-secondary-container": "#00731e",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#9ccaff",
+                        "background": "#f8f9ff",
+                        "outline-variant": "#c0c7d3",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed": "#001f27",
+                        "primary-container": "#0077c2",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed": "#d0e4ff",
+                        "tertiary-fixed-dim": "#4cd6fb",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#b3ebff",
+                        "surface-tint": "#0062a1",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#94f990",
+                        "on-secondary-fixed-variant": "#005313",
+                        "on-tertiary-container": "#f4fcff",
+                        "on-primary-container": "#f9faff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "outline": "#707882",
+                        "surface-dim": "#cbdbf5",
+                        "surface": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary-container": "#007e98",
+                        "secondary-fixed-dim": "#78dc77",
+                        "tertiary": "#006378",
+                        "on-tertiary-fixed-variant": "#004e5f",
+                        "on-secondary-fixed": "#002204",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#001d35",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-background": "#0b1c30",
+                        "surface-variant": "#d3e4fe",
+                        "primary": "#005e9a",
+                        "on-surface-variant": "#404751",
+                        "secondary": "#006e1c",
+                        "secondary-container": "#91f78e",
+                        "on-primary-fixed-variant": "#00497b",
+                        "surface-container": "#e5eeff",
+                        "primary-fixed-dim": "#9ccaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "container-max": "1200px",
+                        "xs": "4px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-sm": ["Work Sans"],
+                        "label-md": ["Work Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Work Sans"],
+                        "body-md": ["Work Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Work Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-sm": ["11px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row antialiased overflow-x-hidden">
+    <!-- SIDEBAR -->
+    <!-- Fondo oscuro para móvil -->
+    <div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[60] transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
+        id="mobile-drawer-backdrop"></div>
+
+    <!-- Menú Móvil -->
+    <aside
+        class="fixed top-0 left-0 bottom-0 w-72 max-w-[85vw] bg-surface-container-low border-r border-outline-variant z-[70] flex flex-col py-md px-base transition-transform duration-300 -translate-x-full md:hidden shadow-2xl"
+        id="mobile-drawer">
+        <div class="flex items-center justify-between mb-lg px-sm">
+            <div class="flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary text-[32px]">water_drop</span>
+                <div>
+                    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                        SIGPE</h1>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+                </div>
+            </div>
+            <button aria-label="Cerrar menú"
+                class="p-xs text-on-surface-variant hover:text-primary rounded-lg transition-colors"
+                id="mobile-drawer-close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <nav class="flex-1 space-y-sm">
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="dashboard.html">
+                <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                <span>Panel de Control</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="residentes.html">
+                <span class="material-symbols-outlined" data-icon="group">group</span>
+                <span>Residentes y Pagos</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="gastos.html">
+                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                <span>Gastos</span>
+            </a>
+            <a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="presupuesto.html">
+                <span class="material-symbols-outlined" data-icon="pie_chart">pie_chart</span>
+                <span>Presupuesto</span>
+            </a>
+        </nav>
+        <!-- Botón cerrar sesión móvil -->
+        <div class="mt-auto border-t border-outline-variant/40 pt-3">
+            <a href="#"
+                class="flex items-center gap-sm px-sm py-sm rounded-lg text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span>Cerrar Sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Menú Escritorio -->
+    <aside
+        class="bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-0 border-r border-outline-variant hidden md:flex flex-col py-md px-base z-50">
+        <div class="flex items-center gap-3 mb-8 px-4">
+            <div
+                class="w-10 h-10 rounded-xl bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+                <span class="material-symbols-outlined text-[24px]">water_drop</span>
+            </div>
+            <div>
+                <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">
+                    SIGPE</h1>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Junta de Agua</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Panel de Control</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="residentes.html">
+                <span class="material-symbols-outlined">group</span>
+                <span>Residentes y Pagos</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="gastos.html">
+                <span class="material-symbols-outlined">account_balance_wallet</span>
+                <span>Gastos</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors"
+                href="presupuesto.html">
+                <span class="material-symbols-outlined">pie_chart</span>
+                <span>Presupuesto</span>
+            </a>
+        </nav>
+        <!-- Botón cerrar sesión escritorio -->
+        <div class="mt-auto border-t border-outline-variant/40 pt-3">
+            <a href="#"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/30 transition-colors font-medium text-sm">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span>Cerrar Sesión</span>
+            </a>
+            <div class="px-4 pt-3 flex items-center justify-between text-xs text-on-surface-variant">
+                <span>SIGPE v2.4</span><span class="text-secondary font-medium">En línea</span>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <div class="flex-1 flex flex-col md:ml-64 w-full md:w-[calc(100%-16rem)] min-w-0">
+        <!-- TopNavBar (Shared Component) -->
+        <!-- TopNavBar Component -->
+        <header
+            class="bg-surface-bright dark:bg-surface-dim sticky top-0 z-40 border-b border-outline-variant shadow-sm flex justify-between items-center h-16 px-4 md:px-6 w-full">
+            <!-- Botón menú móvil y Logo -->
+            <div class="flex items-center gap-2">
+                <button id="mobile-menu-btn" aria-label="Abrir menú"
+                    class="md:hidden text-on-surface-variant hover:text-primary transition-colors p-2 rounded-lg hover:bg-surface-container-high">
+                    <span class="material-symbols-outlined text-[24px]">menu</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                    <div class="leading-none">
+                        <span class="font-headline-md font-bold text-primary text-base leading-tight block">SIGPE</span>
+                        <span class="text-[11px] text-on-surface-variant leading-tight block">Junta
+                            de Agua</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perfil de Usuario y Ajustes -->
+            <div class="flex items-center gap-2 sm:gap-4 relative">
+                <!-- Botón de Ajustes (Engranaje) -->
+                <button id="btn-settings" aria-label="Configuración"
+                    class="text-on-surface-variant hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container-high">
+                    <span class="material-symbols-outlined text-[22px]">settings</span>
+                </button>
+
+                <!-- Menú desplegable del usuario -->
+                <div class="relative">
+                    <button id="user-menu-btn"
+                        class="flex items-center gap-2 hover:bg-surface-container-high p-1 sm:pr-3 rounded-full transition-colors border border-transparent hover:border-outline-variant">
+                        <div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shrink-0"
+                            id="user-initials">
+                            A
+                        </div>
+                        <div class="hidden sm:flex flex-col items-start">
+                            <span class="text-sm font-semibold text-on-surface leading-tight"
+                                id="user-display-name">Cargando...</span>
+                            <span class="text-xs text-on-surface-variant" id="user-display-role">Rol</span>
+                        </div>
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant text-[18px] hidden sm:block">expand_more</span>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="user-dropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg py-1 z-50">
+                        <div class="px-4 py-2 border-b border-outline-variant/50 sm:hidden">
+                            <p class="text-sm font-semibold text-on-surface" id="mobile-user-name">Cargando...</p>
+                            <p class="text-xs text-on-surface-variant" id="mobile-user-role">Rol</p>
+                        </div>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"
+                            id="dropdown-settings">Ajustes de Cuenta</a>
+                        <button
+                            class="w-full text-left block px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors font-medium border-t border-outline-variant/50"
+                            id="btn-logout-dropdown">Cerrar Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Modal de Ajustes de Usuario -->
+        <div id="settings-modal"
+            class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+            <div
+                class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-outline-variant">
+                <div
+                    class="flex justify-between items-center p-4 border-b border-outline-variant/50 bg-surface-container-low">
+                    <h3 class="font-headline-sm text-lg font-bold text-on-surface">Ajustes de Cuenta</h3>
+                    <button id="close-settings-modal"
+                        class="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <form id="change-password-form" class="p-6 space-y-4">
+                    <div id="settings-error"
+                        class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm"></div>
+                    <div id="settings-success"
+                        class="hidden bg-secondary-container text-on-secondary-container p-3 rounded-lg text-sm"></div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-on-surface mb-1">Contraseña Actual</label>
+                        <input type="password" id="current-password" required
+                            class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-on-surface mb-1">Nueva Contraseña</label>
+                        <input type="password" id="new-password" required minlength="6"
+                            class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                    </div>
+
+                    <div class="pt-2 flex justify-end gap-2">
+                        <button type="button" id="cancel-settings-btn"
+                            class="px-4 py-2 text-sm font-medium text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">Cancelar</button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium bg-primary text-on-primary hover:bg-primary-container rounded-lg transition-colors shadow-sm">Actualizar
+                            Contraseña</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Page Content -->
+        <main class="flex-1 p-4 sm:p-md lg:p-lg overflow-y-auto">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-lg gap-4">
+                <div>
+                    <h2 class="font-headline-lg text-2xl sm:text-headline-lg font-bold text-on-surface mb-1">Gestión de
+                        Gastos</h2>
+                    <p class="font-body-md text-sm sm:text-body-md text-on-surface-variant">Monitorea y registra los
+                        egresos operativos de la junta.</p>
+                </div>
+                <button
+                    class="w-full sm:w-auto justify-center bg-primary text-on-primary font-label-md text-label-md py-2.5 px-md rounded-lg flex items-center gap-xs hover:bg-primary/90 transition-colors shadow-[0_4px_12px_rgba(0,94,154,0.15)] active:scale-95 shrink-0">
+                    <span class="material-symbols-outlined text-lg">add</span>
+                    Registrar Gasto
+                </button>
+            </div>
+            <!-- Summary Grid (Responsive: stacked on mobile, 2-col or 3-col on larger viewports) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-gutter mb-6 sm:mb-xl">
+                <!-- Total Monthly Expense Card -->
+                <div
+                    class="bg-surface-container-lowest rounded-xl p-4 sm:p-md shadow-[0_4px_12px_rgba(0,94,154,0.05)] border-t-4 sm:border-t-2 border-secondary-container flex flex-col justify-between">
+                    <div class="flex items-center gap-sm mb-3 sm:mb-md text-on-surface-variant">
+                        <span class="material-symbols-outlined text-primary"
+                            style="font-variation-settings: 'FILL' 1;">payments</span>
+                        <h3 class="font-label-md text-label-md uppercase tracking-wider">Total Mes Actual</h3>
+                    </div>
+                    <div>
+                        <div
+                            class="font-headline-lg text-3xl sm:text-headline-lg font-bold text-on-surface tabular-nums">
+                            $4,250.00</div>
+                        <p class="font-body-sm text-body-sm text-secondary flex items-center gap-xs mt-1">
+                            <span class="material-symbols-outlined text-sm font-semibold">trending_down</span>
+                            12% vs. mes pasado
+                        </p>
+                    </div>
+                </div>
+                <!-- Breakdown by Category Card (Visual) -->
+                <div
+                    class="bg-surface-container-lowest rounded-xl p-4 sm:p-md shadow-[0_4px_12px_rgba(0,94,154,0.05)] lg:col-span-2 border border-outline-variant/30 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-3 sm:mb-md">
+                        <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                            Desglose por Categoría</h3>
+                        <button class="text-primary font-label-md text-label-md hover:underline font-semibold">Ver
+                            reporte completo</button>
+                    </div>
+                    <div class="flex-1 flex flex-col justify-center gap-3">
+                        <!-- Progress bar style visualization -->
+                        <div class="w-full h-3 flex rounded-full overflow-hidden bg-surface-container-high">
+                            <div class="bg-primary h-full transition-all" style="width: 45%;"
+                                title="Mantenimiento - 45%"></div>
+                            <div class="bg-tertiary h-full transition-all" style="width: 30%;"
+                                title="Electricidad - 30%"></div>
+                            <div class="bg-secondary-container h-full transition-all" style="width: 15%;"
+                                title="Suministros - 15%"></div>
+                            <div class="bg-outline-variant h-full transition-all" style="width: 10%;"
+                                title="Otros - 10%"></div>
+                        </div>
+                        <!-- Legend -->
+                        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></div>
+                                <span class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant">Mantenimiento
+                                    (45%)</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-tertiary shrink-0"></div>
+                                <span class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant">Electricidad
+                                    (30%)</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-2.5 h-2.5 rounded-full bg-secondary-container shrink-0"></div>
+                                <span class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant">Suministros
+                                    (15%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Expense List Table Area -->
+            <div
+                class="bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(0,94,154,0.05)] border border-outline-variant/30 overflow-hidden">
+                <!-- Table Header Controls (flex-col on small screens, flex-row on sm+) -->
+                <div
+                    class="p-3.5 sm:p-md border-b border-outline-variant/30 bg-surface-bright flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-headline-sm text-lg sm:text-headline-sm font-semibold text-on-surface">Gastos
+                            Recientes</h3>
+                        <span
+                            class="sm:hidden text-xs text-on-surface-variant font-medium bg-surface-container px-2 py-0.5 rounded-full">24
+                            registros</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div
+                            class="flex lg:hidden items-center bg-surface-container rounded-lg px-2.5 py-1.5 border border-outline-variant/30 flex-1 sm:w-48">
+                            <span class="material-symbols-outlined text-on-surface-variant text-sm mr-1.5">search</span>
+                            <input
+                                class="bg-transparent border-none outline-none font-body-sm text-xs sm:text-body-sm text-on-surface w-full placeholder-on-surface-variant/70 focus:ring-0 p-0"
+                                placeholder="Buscar..." type="text">
+                        </div>
+                        <button
+                            class="border border-outline-variant text-on-surface-variant font-label-md text-label-md py-1.5 sm:py-xs px-3 rounded-lg flex items-center justify-center gap-xs hover:bg-surface-container-low transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-base">filter_list</span>
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+                <!-- Table Container with Responsive Horizontal Scrolling -->
+                <div class="w-full overflow-x-auto -mx-0">
+                    <table class="w-full text-left border-collapse min-w-[640px]">
+                        <thead>
+                            <tr class="bg-[#F1F5F9]">
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold">
+                                    Descripción</th>
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold">
+                                    Categoría</th>
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold">
+                                    Fecha</th>
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold">
+                                    Estado</th>
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold text-right">
+                                    Monto</th>
+                                <th
+                                    class="font-label-md text-label-md text-on-surface-variant py-3 px-4 uppercase tracking-wider font-semibold text-center">
+                                    Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-outline-variant/20">
+                            <!-- Row 1 -->
+                            <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                                <td class="py-3.5 px-4">
+                                    <p class="font-medium text-on-surface">Reparación bomba principal sector Norte</p>
+                                    <p class="text-on-surface-variant text-xs mt-0.5">Factura #INV-042</p>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md text-primary font-medium text-xs">
+                                        <span class="material-symbols-outlined text-[14px]">plumbing</span>
+                                        Mantenimiento
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap text-on-surface-variant">12 Oct 2023</td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="bg-secondary-container/40 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md text-xs font-semibold inline-block">Pagado</span>
+                                </td>
+                                <td
+                                    class="py-3.5 px-4 text-right tabular-nums font-semibold text-on-surface whitespace-nowrap">
+                                    $850.00</td>
+                                <td class="py-3.5 px-4 text-center whitespace-nowrap">
+                                    <button aria-label="Ver detalles"
+                                        class="text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded-md hover:bg-surface-container">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                                <td class="py-3.5 px-4">
+                                    <p class="font-medium text-on-surface">Consumo de energía eléctrica - Planta 1</p>
+                                    <p class="text-on-surface-variant text-xs mt-0.5">Empresa Eléctrica Nacional</p>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md text-tertiary font-medium text-xs">
+                                        <span class="material-symbols-outlined text-[14px]">bolt</span>
+                                        Electricidad
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap text-on-surface-variant">10 Oct 2023</td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="bg-error-container/60 text-on-error-container px-2.5 py-1 rounded-md text-xs font-semibold inline-block">Pendiente</span>
+                                </td>
+                                <td
+                                    class="py-3.5 px-4 text-right tabular-nums font-semibold text-on-surface whitespace-nowrap">
+                                    $1,200.50</td>
+                                <td class="py-3.5 px-4 text-center whitespace-nowrap">
+                                    <button aria-label="Ver detalles"
+                                        class="text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded-md hover:bg-surface-container">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                                <td class="py-3.5 px-4">
+                                    <p class="font-medium text-on-surface">Compra de cloro y químicos purificadores</p>
+                                    <p class="text-on-surface-variant text-xs mt-0.5">Proveedor: Quimicorp</p>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center gap-1 bg-surface-container px-2 py-1 rounded-md text-on-surface-variant font-medium text-xs">
+                                        <span class="material-symbols-outlined text-[14px]">science</span>
+                                        Suministros
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 whitespace-nowrap text-on-surface-variant">05 Oct 2023</td>
+                                <td class="py-3.5 px-4 whitespace-nowrap">
+                                    <span
+                                        class="bg-secondary-container/40 text-on-secondary-fixed-variant px-2.5 py-1 rounded-md text-xs font-semibold inline-block">Pagado</span>
+                                </td>
+                                <td
+                                    class="py-3.5 px-4 text-right tabular-nums font-semibold text-on-surface whitespace-nowrap">
+                                    $430.25</td>
+                                <td class="py-3.5 px-4 text-center whitespace-nowrap">
+                                    <button aria-label="Ver detalles"
+                                        class="text-on-surface-variant hover:text-primary transition-colors p-1.5 rounded-md hover:bg-surface-container">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination (Mobile friendly responsive flex) -->
+                <div
+                    class="p-3 sm:p-sm flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-outline-variant/30 bg-surface-bright">
+                    <span
+                        class="font-body-sm text-xs sm:text-body-sm text-on-surface-variant sm:pl-sm text-center sm:text-left">Mostrando
+                        1 a 3 de 24 registros</span>
+                    <div class="flex items-center gap-1 sm:pr-sm">
+                        <button aria-label="Página anterior"
+                            class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container disabled:opacity-40 transition-colors"
+                            disabled="">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span>
+                        </button>
+                        <button
+                            class="h-8 min-w-[32px] px-2.5 rounded bg-primary-container/20 text-primary font-semibold text-sm">1</button>
+                        <button
+                            class="h-8 min-w-[32px] px-2.5 rounded text-on-surface-variant hover:bg-surface-container font-medium text-sm transition-colors">2</button>
+                        <button aria-label="Página siguiente"
+                            class="p-1.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Interactive Mobile Navigation Logic -->
+    <script>
+            (function () {
+                const openBtn = document.getElementById('openDrawerBtn');
+                const closeBtn = document.getElementById('closeDrawerBtn');
+                const drawer = document.getElementById('mobileDrawer');
+                const backdrop = document.getElementById('mobileBackdrop');
+
+                function openMenu() {
+                    drawer.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                    // Trigger transition opacity
+                    setTimeout(() => {
+                        backdrop.classList.add('opacity-100');
+                    }, 10);
+                    document.body.classList.add('overflow-hidden');
+                }
+
+                function closeMenu() {
+                    drawer.classList.add('-translate-x-full');
+                    backdrop.classList.remove('opacity-100');
+                    setTimeout(() => {
+                        backdrop.classList.add('hidden');
+                    }, 300);
+                    document.body.classList.remove('overflow-hidden');
+                }
+
+                if (openBtn) openBtn.addEventListener('click', openMenu);
+                if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+                if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+                // Escape key accessibility
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !drawer.classList.contains('-translate-x-full')) {
+                        closeMenu();
+                    }
+                });
+            })();
+    </script>
+    <!-- Conectar el archivo de autenticación -->
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

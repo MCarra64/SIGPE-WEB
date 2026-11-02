@@ -2,7 +2,9 @@ import {
   getAllUsuarios, 
   createUsuario, 
   updateUsuario, 
-  deleteUsuario 
+  deleteUsuario,
+  getUsuarioById,
+  updatePassword
 } from '../models/usuario.model.js';
 import bcrypt from 'bcryptjs';
 
@@ -80,6 +82,37 @@ export const removeUsuario = async (req, res) => {
     res.json({ mensaje: 'Usuario desactivado correctamente' });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+export const cambiarPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    // 1. Buscar el usuario
+    const usuario = await getUsuarioById(id);
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    // 2. Verificar que la contraseña actual sea correcta
+    const passwordValido = await bcrypt.compare(currentPassword, usuario.password_hash);
+    if (!passwordValido) {
+      return res.status(401).json({ error: 'La contraseña actual es incorrecta' });
+    }
+
+    // 3. Encriptar la nueva contraseña y guardarla
+    const salt = await bcrypt.genSalt(10);
+    const newHash = await bcrypt.hash(newPassword, salt);
+
+    await updatePassword(id, newHash);
+    
+    res.json({ mensaje: 'Contraseña actualizada correctamente' });
+
+  } catch (error) {
+    console.error("Error al cambiar contraseña:", error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
