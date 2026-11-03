@@ -52,13 +52,16 @@ export const createPago = async (pagoData) => {
   const { id_cuenta, id_periodo, id_usuario, fecha_pago, monto_pagado, numero_recibo, observacion } = pagoData;
   
   const fecha = fecha_pago || new Date().toISOString().split('T')[0];
+  
+  const obsFinal = observacion === undefined ? null : observacion;
+  const reciboFinal = numero_recibo === undefined ? null : numero_recibo;
 
   const query = `
     INSERT INTO pagos (id_cuenta, id_periodo, id_usuario, fecha_pago, monto_pagado, numero_recibo, observacion) 
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   const [result] = await pool.execute(query, [
-    id_cuenta, id_periodo, id_usuario, fecha, monto_pagado, numero_recibo, observacion
+    id_cuenta, id_periodo, id_usuario, fecha, monto_pagado, reciboFinal, obsFinal
   ]);
   return result.insertId;
 };

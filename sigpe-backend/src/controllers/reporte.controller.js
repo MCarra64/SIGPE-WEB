@@ -3,7 +3,8 @@ import {
   getHistorialCuenta, 
   getResumenCajaHoy, 
   getDetallePagosHoy, 
-  getReporteMorosos 
+  getReporteMorosos,
+  getDashboardStats
 } from '../models/reporte.model.js';
 
 export const getEstadoCuenta = async (req, res) => {
@@ -106,5 +107,15 @@ export const getMorosos = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+export const getDashboardData = async (req, res) => {
+  try {
+    const data = await getDashboardStats();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al cargar datos del dashboard' });
   }
 };

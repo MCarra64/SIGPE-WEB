@@ -69,3 +69,16 @@ export const deleteCuenta = async (id) => {
   const [result] = await pool.execute(query, [id]);
   return result.affectedRows;
 };
+
+export const getPeriodosPendientes = async (idCuenta) => {
+  const query = `
+    SELECT p.id_periodo, p.mes, p.anio, c.monto, c.descripcion
+    FROM periodos p
+    INNER JOIN cuotas c ON c.id_periodo = p.id_periodo
+    LEFT JOIN pagos pg ON pg.id_periodo = p.id_periodo AND pg.id_cuenta = ?
+    WHERE pg.id_pago IS NULL
+    ORDER BY p.anio ASC, p.mes ASC
+  `;
+  const [rows] = await pool.execute(query, [idCuenta]);
+  return rows;
+};

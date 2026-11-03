@@ -96,3 +96,77 @@ export const getReporteMorosos = async () => {
   const [rows] = await pool.execute(query);
   return rows;
 };
+
+export const getDashboardStats = async () => {
+  try {
+    // 1. Total recaudado hoy
+    const [cajaHoy] = await pool.execute(`
+      SELECT IFNULL(SUM(monto_pagado), 0) AS total 
+      FROM pagos WHERE DATE(fecha_pago) = CURRENT_DATE()
+    `);
+
+    // 2. Total de abonados
+    const [totalAbonados] = await pool.execute(`
+      SELECT COUNT(id_abonado) AS total FROM abonados WHERE estado = 'Activo'
+    `);
+
+    // 3. Total de morosos
+    const [morosos] = await pool.execute(`
+      SELECT 
+        COUNT(DISTINCT cs.id_cuenta) AS cantidad_morosos,
+        IFNULL(SUM(c.monto), 0) AS deuda_total
+      FROM cuentas_servicio cs
+      CROSS JOIN periodos p
+      INNER JOIN cuotas c ON c.id_periodo = p.id_periodo
+      LEFT JOIN pagos pg ON pg.id_cuenta = cs.id_cuenta AND pg.id_periodo = p.id_periodo
+      WHERE pg.id_pago IS NULL AND cs.estado = 'Activo'
+    `);
+
+    // 4. Últimos 5 pagos (Actividades)
+    const [actividades] = await pool.execute(`
+      SELECT 
+        p.id_pago, p.monto_pagado, p.fecha_pago, p.numero_recibo,
+        CONCAT(a.nombres, ' ', a.apellidos) AS nombre_abonado,
+        cs.numero_cuenta
+      FROM pagos p
+      INNER JOIN cuentas_servicio cs ON p.id_cuenta = cs.id_cuenta
+      INNER JOIN abonados a ON cs.id_abonado = a.id_abonado
+      ORDER BY p.fecha_pago DESC, p.id_pago DESC
+      LIMIT 5
+    `);
+
+    // 5. Ingresos de los últimos 6 meses (PAGOS)
+    const [ingresosMeses] = await pool.execute(`
+      SELECT 
+        DATE_FORMAT(fecha_pago, '%Y-%m') AS mes_anio,
+        SUM(monto_pagado) AS total
+      FROM pagos
+      WHERE fecha_pago >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+      GROUP BY mes_anio
+      ORDER BY mes_anio ASC
+    `);
+
+    // 6. Egresos de los últimos 6 meses (GASTOS) <-- NUEVO
+    const [gastosMeses] = await pool.execute(`
+      SELECT 
+        DATE_FORMAT(fecha, '%Y-%m') AS mes_anio,
+        SUM(monto) AS total
+      FROM gastos
+      WHERE fecha >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+      GROUP BY mes_anio
+      ORDER BY mes_anio ASC
+    `);
+
+    return {
+      caja_hoy: cajaHoy[0].total,
+      total_abonados: totalAbonados[0].total,
+      morosos: morosos[0],
+      actividades: actividades,
+      ingresos_meses: ingresosMeses,
+      gastos_meses: gastosMeses
+    };
+  } catch (error) {
+    console.error("Error en getDashboardStats:", error);
+    throw error;
+  }
+};

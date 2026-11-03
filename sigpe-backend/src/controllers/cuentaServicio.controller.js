@@ -4,8 +4,9 @@ import {
   getCuentasByAbonado,
   createCuenta, 
   updateCuenta, 
-  deleteCuenta 
-} from '../models/cuentaservicio.model.js';
+  deleteCuenta,
+  getPeriodosPendientes
+} from '../models/cuentaServicio.model.js';
 
 export const getCuentas = async (req, res) => {
   try {
@@ -108,6 +109,17 @@ export const removeCuenta = async (req, res) => {
     }
 
     res.json({ mensaje: 'Cuenta desactivada correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+export const getPendientesCuenta = async (req, res) => {
+  try {
+    const { id } = req.params; // id de la cuenta
+    const pendientes = await getPeriodosPendientes(id);
+    res.json(pendientes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error interno del servidor' });

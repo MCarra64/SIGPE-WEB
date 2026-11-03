@@ -12,6 +12,7 @@
         <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap"
                 rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script id="tailwind-config">
                 tailwind.config = {
                         darkMode: "class",
@@ -323,12 +324,6 @@
 
                         <!-- Perfil de Usuario y Ajustes -->
                         <div class="flex items-center gap-2 sm:gap-4 relative">
-                                <!-- Botón de Ajustes (Engranaje) -->
-                                <button id="btn-settings" aria-label="Configuración"
-                                        class="text-on-surface-variant hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container-high">
-                                        <span class="material-symbols-outlined text-[22px]">settings</span>
-                                </button>
-
                                 <!-- Menú desplegable del usuario -->
                                 <div class="relative">
                                         <button id="user-menu-btn"
@@ -358,9 +353,7 @@
                                                 </div>
                                                 <a href="#"
                                                         class="block px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"
-                                                        id="dropdown-settings">Ajustes de Cuenta</a>
-                                                <button class="w-full text-left block px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors font-medium border-t border-outline-variant/50"
-                                                        id="btn-logout-dropdown">Cerrar Sesión</button>
+                                                        id="dropdown-settings">Cambiar Contraseña</a>
                                         </div>
                                 </div>
                         </div>
@@ -411,6 +404,129 @@
                                 </form>
                         </div>
                 </div>
+                <!-- MODAL: REGISTRAR PAGO -->
+                <div id="pago-modal"
+                        class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+                        <div
+                                class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-outline-variant">
+                                <div
+                                        class="flex justify-between items-center p-4 border-b border-outline-variant/50 bg-surface-container-low">
+                                        <h3 class="font-headline-sm text-lg font-bold text-on-surface">Registrar Pago
+                                        </h3>
+                                        <button id="close-pago-modal"
+                                                class="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors">
+                                                <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                </div>
+
+                                <form id="pago-form" class="p-6 space-y-4">
+                                        <div id="pago-error"
+                                                class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm">
+                                        </div>
+
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Buscar
+                                                        Residente o Cuenta</label>
+                                                <input type="text" id="pago-cuenta-input" list="lista-cuentas"
+                                                        placeholder="Escribe el nombre del residente..." required
+                                                        autocomplete="off"
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                                <datalist id="lista-cuentas">
+                                                        <!-- Se llena dinámicamente -->
+                                                </datalist>
+                                        </div>
+
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Periodo
+                                                        Pendiente</label>
+                                                <input type="text" id="pago-periodo-input" list="lista-periodos"
+                                                        placeholder="Seleccione cuenta primero..." required disabled
+                                                        autocomplete="off"
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none disabled:opacity-50">
+                                                <datalist id="lista-periodos">
+                                                        <!-- Se llena dinámicamente -->
+                                                </datalist>
+                                        </div>
+
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Monto
+                                                        ($)</label>
+                                                <input type="number" step="0.01" id="pago-monto" required readonly
+                                                        class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-2 px-3 font-bold text-lg focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+
+                                        <div>
+                                                <label class="block text-sm font-medium text-on-surface mb-1">Número de
+                                                        Recibo</label>
+                                                <input type="text" id="pago-recibo" required
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+
+                                        <div class="pt-2 flex justify-end gap-2">
+                                                <button type="button" id="cancel-pago-btn"
+                                                        class="px-4 py-2 text-sm font-medium text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">Cancelar</button>
+                                                <button type="submit"
+                                                        class="px-4 py-2 text-sm font-medium bg-primary text-on-primary hover:bg-primary-container rounded-lg transition-colors shadow-sm">Registrar
+                                                        Pago</button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+                <!-- MODAL: NUEVO RESIDENTE -->
+                <div id="residente-modal"
+                        class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+                        <div
+                                class="bg-surface-container-lowest rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-outline-variant">
+                                <div
+                                        class="flex justify-between items-center p-4 border-b border-outline-variant/50 bg-surface-container-low">
+                                        <h3 class="font-headline-sm text-lg font-bold text-on-surface">Nuevo Residente
+                                        </h3>
+                                        <button id="close-residente-modal"
+                                                class="text-on-surface-variant hover:text-error p-1 rounded-full transition-colors">
+                                                <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                </div>
+
+                                <form id="residente-form" class="p-6 space-y-4">
+                                        <div id="residente-error"
+                                                class="hidden bg-error-container text-on-error-container p-3 rounded-lg text-sm">
+                                        </div>
+
+                                        <div>
+                                                <label
+                                                        class="block text-sm font-medium text-on-surface mb-1">Nombres</label>
+                                                <input type="text" id="res-nombres" required
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                                <label
+                                                        class="block text-sm font-medium text-on-surface mb-1">Apellidos</label>
+                                                <input type="text" id="res-apellidos" required
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                                <label
+                                                        class="block text-sm font-medium text-on-surface mb-1">Teléfono</label>
+                                                <input type="text" id="res-telefono"
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+                                        <div>
+                                                <label
+                                                        class="block text-sm font-medium text-on-surface mb-1">Dirección</label>
+                                                <input type="text" id="res-direccion"
+                                                        class="w-full bg-surface border border-outline-variant rounded-lg py-2 px-3 focus:ring-2 focus:ring-primary focus:outline-none">
+                                        </div>
+
+                                        <div class="pt-2 flex justify-end gap-2">
+                                                <button type="button" id="cancel-residente-btn"
+                                                        class="px-4 py-2 text-sm font-medium text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors">Cancelar</button>
+                                                <button type="submit"
+                                                        class="px-4 py-2 text-sm font-medium bg-secondary text-on-primary hover:bg-secondary/90 rounded-lg transition-colors shadow-sm">Guardar
+                                                        Residente</button>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
                 <!-- Canvas -->
                 <main class="flex-1 overflow-y-auto p-4 md:p-lg space-y-6 md:space-y-8 bg-[#F8FAFC]">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -422,13 +538,16 @@
                                                 Resumen mensual de gestión.</p>
                                 </div>
                                 <div class="flex flex-wrap sm:flex-nowrap gap-2 sm:gap-3 w-full sm:w-auto">
-                                        <button
+                                        <!-- Botón Registrar Pago -->
+                                        <button id="btn-open-pago"
                                                 class="flex-1 sm:flex-none justify-center bg-primary text-on-primary px-3 sm:px-4 py-2 rounded-lg font-label-md hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2 text-sm">
                                                 <span class="material-symbols-outlined text-[18px]"
                                                         data-icon="add">add</span>
                                                 Registrar Pago
                                         </button>
-                                        <button
+
+                                        <!-- Botón Nuevo Residente -->
+                                        <button id="btn-open-residente"
                                                 class="flex-1 sm:flex-none justify-center border border-primary text-primary px-3 sm:px-4 py-2 rounded-lg font-label-md hover:bg-primary/5 transition-colors flex items-center gap-2 text-sm">
                                                 <span class="material-symbols-outlined text-[18px]"
                                                         data-icon="person_add">person_add</span>
@@ -449,8 +568,9 @@
                                         </div>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant mb-1">Total Fondos
                                                 Recaudados</p>
-                                        <h3 class="font-headline-md text-xl md:text-headline-md text-on-surface">
-                                                $12,450.00</h3>
+                                        <h3 id="card-recaudado"
+                                                class="font-headline-md text-xl md:text-headline-md text-on-surface">
+                                                $0.00</h3>
                                         <div class="mt-4 flex items-center gap-1 text-secondary text-sm">
                                                 <span class="material-symbols-outlined text-[16px]"
                                                         data-icon="trending_up">trending_up</span>
@@ -467,10 +587,11 @@
                                         </div>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant mb-1">Residentes al
                                                 Día</p>
-                                        <h3 class="font-headline-md text-xl md:text-headline-md text-on-surface">85%
+                                        <h3 id="card-abonados"
+                                                class="font-headline-md text-xl md:text-headline-md text-on-surface">0
                                         </h3>
                                         <div class="mt-4 flex items-center gap-1 text-on-surface-variant text-sm">
-                                                <span class="">142 de 168 lotes</span>
+                                                <span id="card-abonados-texto" class="">...</span>
                                         </div>
                                 </div>
                                 <!-- Card 3 -->
@@ -483,12 +604,13 @@
                                         </div>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant mb-1">Pagos
                                                 Pendientes</p>
-                                        <h3 class="font-headline-md text-xl md:text-headline-md text-on-surface">
-                                                $3,120.00</h3>
+                                        <h3 id="card-morosos"
+                                                class="font-headline-md text-xl md:text-headline-md text-on-surface">
+                                                $0.00</h3>
                                         <div class="mt-4 flex items-center gap-1 text-error text-sm">
                                                 <span class="material-symbols-outlined text-[16px]"
                                                         data-icon="error">error</span>
-                                                <span class="font-medium">26 residentes atrasados</span>
+                                                <span id="card-morosos-texto" class="font-medium">...</span>
                                         </div>
                                 </div>
                                 <!-- Card 4 -->
@@ -501,10 +623,11 @@
                                         </div>
                                         <p class="font-body-sm text-body-sm text-on-surface-variant mb-1">Gastos del Mes
                                         </p>
-                                        <h3 class="font-headline-md text-xl md:text-headline-md text-on-surface">
-                                                $4,800.00</h3>
+                                        <h3 id="card-gastos"
+                                                class="font-headline-md text-xl md:text-headline-md text-on-surface">
+                                                $0.00</h3>
                                         <div class="mt-4 flex items-center gap-1 text-on-surface-variant text-sm">
-                                                <span class="">Mantenimiento bomba pt. 1</span>
+                                                <span class="">...</span>
                                         </div>
                                 </div>
                         </div>
@@ -526,109 +649,8 @@
                                                 </button>
                                         </div>
                                         <!-- CSS-based simple bar chart representation -->
-                                        <div class="w-full overflow-x-auto">
-                                                <div
-                                                        class="min-w-[320px] h-64 flex items-end justify-between gap-2 md:gap-6 pt-4 border-b border-outline-variant pb-2 relative">
-                                                        <!-- Y Axis labels -->
-                                                        <div
-                                                                class="absolute left-0 top-0 bottom-0 w-8 flex flex-col justify-between text-xs text-on-surface-variant pb-6 hidden sm:flex">
-                                                                <span class="">$15k</span>
-                                                                <span class="">$10k</span>
-                                                                <span class="">$5k</span>
-                                                                <span class="">0</span>
-                                                        </div>
-                                                        <div
-                                                                class="flex-1 flex justify-around h-full items-end ml-0 sm:ml-10">
-                                                                <!-- Month 1 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div class="w-1/2 bg-primary rounded-t-sm h-[60%] transition-all duration-300 group-hover:bg-primary/80"
-                                                                                        title="Ingresos: $9,000"></div>
-                                                                                <div class="w-1/2 bg-tertiary rounded-t-sm h-[40%] transition-all duration-300 group-hover:bg-tertiary/80"
-                                                                                        title="Egresos: $6,000"></div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant">Ene</span>
-                                                                </div>
-                                                                <!-- Month 2 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div
-                                                                                        class="w-1/2 bg-primary rounded-t-sm h-[70%] transition-all duration-300 group-hover:bg-primary/80">
-                                                                                </div>
-                                                                                <div
-                                                                                        class="w-1/2 bg-tertiary rounded-t-sm h-[35%] transition-all duration-300 group-hover:bg-tertiary/80">
-                                                                                </div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant">Feb</span>
-                                                                </div>
-                                                                <!-- Month 3 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div
-                                                                                        class="w-1/2 bg-primary rounded-t-sm h-[85%] transition-all duration-300 group-hover:bg-primary/80">
-                                                                                </div>
-                                                                                <div
-                                                                                        class="w-1/2 bg-tertiary rounded-t-sm h-[45%] transition-all duration-300 group-hover:bg-tertiary/80">
-                                                                                </div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant">Mar</span>
-                                                                </div>
-                                                                <!-- Month 4 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div
-                                                                                        class="w-1/2 bg-primary rounded-t-sm h-[65%] transition-all duration-300 group-hover:bg-primary/80">
-                                                                                </div>
-                                                                                <div
-                                                                                        class="w-1/2 bg-tertiary rounded-t-sm h-[30%] transition-all duration-300 group-hover:bg-tertiary/80">
-                                                                                </div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant">Abr</span>
-                                                                </div>
-                                                                <!-- Month 5 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div
-                                                                                        class="w-1/2 bg-primary rounded-t-sm h-[90%] transition-all duration-300 group-hover:bg-primary/80">
-                                                                                </div>
-                                                                                <div
-                                                                                        class="w-1/2 bg-tertiary rounded-t-sm h-[50%] transition-all duration-300 group-hover:bg-tertiary/80">
-                                                                                </div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant">May</span>
-                                                                </div>
-                                                                <!-- Month 6 -->
-                                                                <div
-                                                                        class="w-full max-w-[40px] flex flex-col items-center gap-2 group relative">
-                                                                        <div
-                                                                                class="w-full flex justify-center gap-1 items-end h-[200px]">
-                                                                                <div
-                                                                                        class="w-1/2 bg-primary rounded-t-sm h-[80%] transition-all duration-300 group-hover:bg-primary/80">
-                                                                                </div>
-                                                                                <div
-                                                                                        class="w-1/2 bg-tertiary rounded-t-sm h-[40%] transition-all duration-300 group-hover:bg-tertiary/80">
-                                                                                </div>
-                                                                        </div>
-                                                                        <span
-                                                                                class="text-xs text-on-surface-variant font-bold text-primary">Jun</span>
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                        <div class="w-full relative h-[300px] mt-4">
+                                                <canvas id="graficoIngresos"></canvas>
                                         </div>
                                         <div class="flex justify-center gap-6 mt-4 pt-2">
                                                 <div class="flex items-center gap-2">
@@ -649,96 +671,13 @@
                                                         class="font-headline-sm text-lg md:text-headline-sm text-on-surface">
                                                         Actividades Recientes</h3>
                                         </div>
-                                        <div class="flex-1 overflow-y-auto space-y-4 pr-1">
-                                                <!-- Activity Item -->
-                                                <div
-                                                        class="flex gap-4 items-start pb-4 border-b border-outline-variant/30 last:border-0">
-                                                        <div
-                                                                class="w-10 h-10 rounded-full bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
-                                                                <span class="material-symbols-outlined text-[20px]"
-                                                                        data-icon="payments">payments</span>
-                                                        </div>
-                                                        <div class="min-w-0 flex-1">
-                                                                <p
-                                                                        class="font-body-md text-on-surface font-medium truncate">
-                                                                        Pago recibido - Lote 42</p>
-                                                                <p
-                                                                        class="font-body-sm text-on-surface-variant truncate">
-                                                                        Juan Pérez depositó cuota de mantenimiento.</p>
-                                                                <p class="text-xs text-outline mt-1">Hace 2 horas</p>
-                                                        </div>
-                                                        <div
-                                                                class="ml-2 font-medium text-secondary whitespace-nowrap text-sm md:text-base">
-                                                                +$15.00
-                                                        </div>
-                                                </div>
-                                                <!-- Activity Item -->
-                                                <div
-                                                        class="flex gap-4 items-start pb-4 border-b border-outline-variant/30 last:border-0">
-                                                        <div
-                                                                class="w-10 h-10 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center shrink-0">
-                                                                <span class="material-symbols-outlined text-[20px]"
-                                                                        data-icon="build">build</span>
-                                                        </div>
-                                                        <div class="min-w-0 flex-1">
-                                                                <p
-                                                                        class="font-body-md text-on-surface font-medium truncate">
-                                                                        Gasto registrado</p>
-                                                                <p
-                                                                        class="font-body-sm text-on-surface-variant truncate">
-                                                                        Ferretería El Sol - Materiales.</p>
-                                                                <p class="text-xs text-outline mt-1">Ayer, 14:30</p>
-                                                        </div>
-                                                        <div
-                                                                class="ml-2 font-medium text-on-surface whitespace-nowrap text-sm md:text-base">
-                                                                -$120.50
-                                                        </div>
-                                                </div>
-                                                <!-- Activity Item -->
-                                                <div
-                                                        class="flex gap-4 items-start pb-4 border-b border-outline-variant/30 last:border-0">
-                                                        <div
-                                                                class="w-10 h-10 rounded-full bg-primary-container/20 text-primary flex items-center justify-center shrink-0">
-                                                                <span class="material-symbols-outlined text-[20px]"
-                                                                        data-icon="person_add">person_add</span>
-                                                        </div>
-                                                        <div class="min-w-0 flex-1">
-                                                                <p
-                                                                        class="font-body-md text-on-surface font-medium truncate">
-                                                                        Nuevo residente</p>
-                                                                <p
-                                                                        class="font-body-sm text-on-surface-variant truncate">
-                                                                        Familia González - Lote 156.</p>
-                                                                <p class="text-xs text-outline mt-1">Ayer, 09:15</p>
-                                                        </div>
-                                                </div>
-                                                <!-- Activity Item -->
-                                                <div
-                                                        class="flex gap-4 items-start pb-4 border-b border-outline-variant/30 last:border-0">
-                                                        <div
-                                                                class="w-10 h-10 rounded-full bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
-                                                                <span class="material-symbols-outlined text-[20px]"
-                                                                        data-icon="payments">payments</span>
-                                                        </div>
-                                                        <div class="min-w-0 flex-1">
-                                                                <p
-                                                                        class="font-body-md text-on-surface font-medium truncate">
-                                                                        Pago recibido - Lote 8</p>
-                                                                <p
-                                                                        class="font-body-sm text-on-surface-variant truncate">
-                                                                        Transferencia bancaria.</p>
-                                                                <p class="text-xs text-outline mt-1">12 May, 16:45</p>
-                                                        </div>
-                                                        <div
-                                                                class="ml-2 font-medium text-secondary whitespace-nowrap text-sm md:text-base">
-                                                                +$30.00
-                                                        </div>
-                                                </div>
+                                        <div class="flex-1 overflow-y-auto space-y-4 pr-1" id="lista-actividades">
+                                                <!-- Aqui van las actividades recientes de forma dinamica -->
                                         </div>
-                                        <button
-                                                class="w-full mt-4 py-2 border border-outline-variant rounded-lg text-primary font-label-md hover:bg-surface-container-high transition-colors">
+                                        <a href="residentes.html"
+                                                class="w-full block text-center mt-4 py-2 border border-outline-variant rounded-lg text-primary font-label-md hover:bg-surface-container-high transition-colors">
                                                 Ver todo el historial
-                                        </button>
+                                        </a>
                                 </div>
                         </div>
                 </main>
@@ -781,8 +720,9 @@
                         }
                 });
         </script>
-        <!-- Conectar el archivo de autenticación -->
+        <!-- Conecciones .js -->
         <script src="js/auth.js"></script>
+        <script src="js/dashboard.js"></script>
 </body>
 
 </html>

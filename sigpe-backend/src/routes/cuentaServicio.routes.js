@@ -5,7 +5,8 @@ import {
   getCuentasDeAbonado,
   postCuenta, 
   putCuenta, 
-  removeCuenta 
+  removeCuenta,
+  getPendientesCuenta
 } from '../controllers/cuentaServicio.controller.js';
 import { verificarToken } from '../middlewares/auth.middleware.js';
 
@@ -17,5 +18,6 @@ router.get('/abonado/:idAbonado', getCuentasDeAbonado);
 router.post('/', verificarToken, postCuenta);
 router.put('/:id', verificarToken, putCuenta);
 router.delete('/:id', verificarToken, removeCuenta);
+router.get('/:id/pendientes', verificarToken, getPendientesCuenta);
 
 export default router;
