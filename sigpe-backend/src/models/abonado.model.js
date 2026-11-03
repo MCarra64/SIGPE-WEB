@@ -45,3 +45,25 @@ export const deleteAbonado = async (id) => {
   const [result] = await pool.execute(query, [id]);
   return result.affectedRows;
 };
+
+export const getResidentesConEstado = async () => {
+  const query = `
+    SELECT 
+      a.id_abonado,
+      CONCAT(a.nombres, ' ', a.apellidos) AS nombre_completo,
+      a.nombres,
+      a.apellidos,
+      a.telefono,
+      a.direccion,
+      cs.id_cuenta,
+      cs.numero_cuenta,
+      (SELECT IFNULL(SUM(c.monto), 0) FROM cuotas c CROSS JOIN periodos p ON c.id_periodo = p.id_periodo LEFT JOIN pagos pg ON pg.id_periodo = p.id_periodo AND pg.id_cuenta = cs.id_cuenta WHERE pg.id_pago IS NULL) as deuda_total,
+      (SELECT MAX(fecha_pago) FROM pagos pg WHERE pg.id_cuenta = cs.id_cuenta) as ultimo_pago
+    FROM abonados a
+    INNER JOIN cuentas_servicio cs ON a.id_abonado = cs.id_abonado
+    WHERE a.estado = 'Activo'
+    ORDER BY a.apellidos ASC
+  `;
+  const [rows] = await pool.execute(query);
+  return rows;
+};

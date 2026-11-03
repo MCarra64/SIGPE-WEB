@@ -4,12 +4,14 @@ import {
   getAbonado, 
   postAbonado, 
   putAbonado, 
-  removeAbonado 
+  removeAbonado,
+  getTablaResidentes
 } from '../controllers/abonado.controller.js';
 import { verificarToken } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
+router.get('/tabla', verificarToken, getTablaResidentes);
 router.get('/', getAbonados);
 router.get('/:id', getAbonado);
 router.post('/', verificarToken, postAbonado);

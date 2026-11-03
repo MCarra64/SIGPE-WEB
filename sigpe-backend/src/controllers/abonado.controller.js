@@ -3,7 +3,8 @@ import {
   getAbonadoById, 
   createAbonado, 
   updateAbonado, 
-  deleteAbonado 
+  deleteAbonado,
+  getResidentesConEstado
 } from '../models/abonado.model.js';
 
 export const getAbonados = async (req, res) => {
@@ -85,6 +86,16 @@ export const removeAbonado = async (req, res) => {
     }
 
     res.json({ mensaje: 'Abonado desactivado correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+export const getTablaResidentes = async (req, res) => {
+  try {
+    const residentes = await getResidentesConEstado();
+    res.json(residentes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error interno del servidor' });
